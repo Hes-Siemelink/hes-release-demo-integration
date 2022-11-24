@@ -1,0 +1,31 @@
+version: 1
+disable_existing_loggers: false
+formatters:
+  standard:
+    format: '%(asctime)s %(levelname)-7s [%(filename)s:%(lineno)d] - %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: standard
+    stream: ext://sys.stdout
+
+loggers:
+  example_api:
+    level: DEBUG
+    handlers: [ console ]
+    propagate: false
+  example_abort:
+    level: DEBUG
+    handlers: [ console ]
+    propagate: false
+  __main__:
+    level: DEBUG
+    handlers: [ console ]
+    propagate: false
+
+root:
+  level: INFO
+  handlers: [ console ]
+  propogate: false

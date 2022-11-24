@@ -1,0 +1,33 @@
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <type type="ContainerExample.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
+        <!-- container image - location of the task logic -->
+        <property name="image" required="true" hidden="true" default="@registry.url@/@registry.org@/@project.name@:@project.version@" />
+        <property name="registryUrl" required="true" hidden="true" default="@registry.url@" />
+
+        <!-- required capabilities required by all the tasks-->
+        <property name="defaultRequiredCapabilities" default="container" required="true" kind="set_of_string" hidden="true" transient="true"/>
+        <!-- task UI properties -->
+        <property name="iconLocation" default="test.png" hidden="true"/>
+        <property name="taskColor" hidden="true" default="#667385" />
+    </type>
+
+    <type type="ContainerExample.apiExample" label='API Example' extends="ContainerExample.BaseTask">
+        <property name="scriptLocation" category="script" kind="string" hidden="true" default="product.py"/>
+        <property name="url" category="input" kind="string" default="https://dummyjson.com/products/"/>
+        <property name="productId" category="input" kind="string" default="1"/>
+        <property name="productName" kind="string" category="output" />
+        <property name="brand" kind="string" category="output" />
+    </type>
+
+    <type type="ContainerExample.abortExample" label='Abort Example' extends="ContainerExample.BaseTask">
+        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_abort.py"/>
+        <property name="loopCount" category="input" kind="integer" default="25"/>
+        <property name="waitTime" category="input" kind="integer" default="5"/>
+    </type>
+
+
+
+</synthetic>
