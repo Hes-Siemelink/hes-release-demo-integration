@@ -1,3 +1,3 @@
 # xlr-container-python-template
 
-A Template for Creating Python Container Based Plugins.
+This project serves as a template for developing a Python-based container plugin.

@@ -2,7 +2,7 @@
            xmlns="http://www.xebialabs.com/deployit/synthetic"
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
-    <type type="ContainerExample.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
+    <type type="ContainerTemplate.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
         <!-- container image - location of the task logic -->
         <property name="image" required="true" hidden="true" default="@registry.url@/@registry.org@/@project.name@:@project.version@" />
         <property name="registryUrl" required="true" hidden="true" default="@registry.url@" />
@@ -14,18 +14,22 @@
         <property name="taskColor" hidden="true" default="#667385" />
     </type>
 
-    <type type="ContainerExample.apiExample" label='API Example' extends="ContainerExample.BaseTask">
-        <property name="scriptLocation" category="script" kind="string" hidden="true" default="product.py"/>
+    <type type="ContainerTemplate.apiExample" label='API Example' extends="ContainerTemplate.BaseTask">
+        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_api.py"/>
         <property name="url" category="input" kind="string" default="https://dummyjson.com/products/"/>
         <property name="productId" category="input" kind="string" default="1"/>
         <property name="productName" kind="string" category="output" />
         <property name="brand" kind="string" category="output" />
     </type>
 
-    <type type="ContainerExample.abortExample" label='Abort Example' extends="ContainerExample.BaseTask">
+    <type type="ContainerTemplate.abortExample" label='Abort Example' extends="ContainerTemplate.BaseTask">
         <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_abort.py"/>
-        <property name="loopCount" category="input" kind="integer" default="25"/>
-        <property name="waitTime" category="input" kind="integer" default="5"/>
+        <property name="url" category="input" kind="string" default="http://httpbin.org/basic-auth/"/>
+        <property name="username" category="input" kind="string" default="user"/>
+        <property name="password" category="input" password="true"/>
+        <property name="retryWaitingTime" category="input" kind="integer" default="5" description="Waiting time for retry in sec"/>
+        <property name="retryCount" category="input" kind="integer" default="10" description="Number of retries"/>
+        <property name="attemptNumber" kind="integer" category="output" description="Retry attempts for request"/>
     </type>
 
 
