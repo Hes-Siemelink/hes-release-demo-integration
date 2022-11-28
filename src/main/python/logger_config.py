@@ -2,7 +2,7 @@ import logging.config
 import pkgutil
 import yaml
 
-config_file_data = pkgutil.get_data(__name__, "mylogger.yaml")
+config_file_data = pkgutil.get_data(__name__, "logger.yaml")
 
 try:
     log_config = yaml.safe_load(config_file_data)

@@ -26,10 +26,10 @@
         <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_abort.py"/>
         <property name="url" category="input" kind="string" default="http://httpbin.org/basic-auth/"/>
         <property name="username" category="input" kind="string" default="user"/>
-        <property name="password" category="input" password="true"/>
-        <property name="retryWaitingTime" category="input" kind="integer" default="5" description="Waiting time for retry in sec"/>
+        <property name="password" category="input" password="true" default="123"/>
+        <property name="retryWaitingTime" category="input" kind="integer" default="2" description="Waiting time for retry in sec"/>
         <property name="retryCount" category="input" kind="integer" default="10" description="Number of retries"/>
-        <property name="attemptNumber" kind="integer" category="output" description="Retry attempts for request"/>
+        <property name="attemptNumber" kind="integer" category="output" description="A number of attempts were requested."/>
     </type>
 
 

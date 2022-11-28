@@ -3,9 +3,8 @@ import sys
 
 import requests
 from datetime import datetime
-
 from release_sdk import BaseTask, OutputContext, AbortException
-from tenacity import wait_fixed, stop_after_attempt, Retrying, retry_if_exception_type
+from tenacity import wait_fixed, stop_after_attempt, Retrying, RetryError
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +20,6 @@ class ExampleAbort(BaseTask):
         """ Here is the task logic. It should return 'OutputContext' object. """
 
         output_context: OutputContext = OutputContext(-1, {}, [])
-        print(f"Task property values are  : {self.param}")
         logger.debug(f"Task property values are  : {self.param}")
 
         try:
@@ -29,15 +27,17 @@ class ExampleAbort(BaseTask):
 
             # Here, we wait for 'retry_waiting_time' seconds before attempting to retry and
             # we retry for 'max_retry_attempts' times.
-            # It will retry in case of RuntimeError
 
             retryer = Retrying(wait=wait_fixed(self.param['retryWaitingTime']),
-                               stop=stop_after_attempt(self.param['retryCount']),
-                               retry=retry_if_exception_type(RuntimeError))
+                               stop=stop_after_attempt(self.param['retryCount']))
 
             retryer(self.authenticate_user, request_url)
-
+            self.__add_comment__("The user authentication was successful.")
             output_context.exit_code = 0
+
+        except RetryError:
+            self.__add_comment__("The user authentication was a failure.")
+            output_context.exit_code = 0  # for task success
 
         except AbortException:
             self.handle_abort()
@@ -54,11 +54,10 @@ class ExampleAbort(BaseTask):
     def authenticate_user(self, request_url):
         response = requests.get(request_url)
         logger.debug(f"Status code : {response.status_code}, Datetime : {datetime.now()}")
-        if response.status_code != 200:
-            if self.is_aborted():
-                raise AbortException()
-            else:
-                raise RuntimeError()
+        if self.is_aborted():
+            raise AbortException()
+        else:
+            response.raise_for_status()
 
     def abort(self) -> None:
         self.aborted = True
@@ -70,3 +69,6 @@ class ExampleAbort(BaseTask):
         # Write your abort logic
         logger.debug("Abort requested")
         sys.exit(104)
+
+    def __add_comment__(self, comment: str) -> None:
+        logger.debug(f"##[start: comment]{comment}##[end: comment]")
