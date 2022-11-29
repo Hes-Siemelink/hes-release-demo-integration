@@ -6,6 +6,7 @@ from .input_context import InputContext
 from .job_data_encryptor import AESJobDataEncryptor, NoOpJobDataEncryptor
 from .output_context import OutputContext
 from .masked_io import MaskedIO
+from .base_task import BaseTask
 
 # masked IO
 masked_std_out: MaskedIO = MaskedIO(sys.stdout)
@@ -43,7 +44,7 @@ def create_output_context_file(output_context: OutputContext):
 class BasePlugin:
 
     def __init__(self):
-        self.task_object: None = None
+        self.task_object: BaseTask = None
 
     def execute_job(self) -> OutputContext:
         if self.task_object:

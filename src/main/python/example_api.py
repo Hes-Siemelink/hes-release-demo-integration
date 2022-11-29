@@ -3,7 +3,7 @@ import logging
 import requests
 from requests import HTTPError
 
-from release_sdk import BaseTask, OutputContext, AbortException
+from dai_release_sdk import BaseTask, OutputContext, AbortException
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class ExampleApi(BaseTask):
 
         try:
             request_url = self.param['url'] + self.param['productId']
-            self.__add_comment__(f"Request URL is {request_url}")
+            self.__add_comment__(logger, f"Request URL is {request_url}")
             response = requests.get(request_url)
             response.raise_for_status()
             self.title = response.json()['title']
@@ -49,5 +49,3 @@ class ExampleApi(BaseTask):
     def abort(self) -> None:
         raise AbortException
 
-    def __add_comment__(self, comment: str) -> None:
-        logger.debug(f"##[start: comment]{comment}##[end: comment]")

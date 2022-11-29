@@ -1,13 +1,13 @@
 # The below imports should always be the first in this file.
 from __future__ import annotations
-from release_sdk import BasePlugin
+from dai_release_sdk import BasePlugin
 import logger_config
 # The above imports should always be the first in this file.
 
 import sys
 import logging
 import signal
-from release_sdk import get_task_properties, create_output_context_file, AbortException, OutputContext
+from dai_release_sdk import get_task_properties, create_output_context_file, AbortException, OutputContext
 from example_api import ExampleApi
 from example_abort import ExampleAbort
 

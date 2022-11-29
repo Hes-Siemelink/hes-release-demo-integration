@@ -3,7 +3,7 @@ import sys
 
 import requests
 from datetime import datetime
-from release_sdk import BaseTask, OutputContext, AbortException
+from dai_release_sdk import BaseTask, OutputContext, AbortException
 from tenacity import wait_fixed, stop_after_attempt, Retrying, RetryError
 
 logger = logging.getLogger(__name__)
@@ -29,14 +29,15 @@ class ExampleAbort(BaseTask):
             # we retry for 'max_retry_attempts' times.
 
             retryer = Retrying(wait=wait_fixed(self.param['retryWaitingTime']),
-                               stop=stop_after_attempt(self.param['retryCount']))
+                               stop=stop_after_attempt(self.param['retryCount']),
+                               after=self.update_status)
 
             retryer(self.authenticate_user, request_url)
-            self.__add_comment__("The user authentication was successful.")
+            self.__add_comment__(logger, "The user authentication was successful.")
             output_context.exit_code = 0
 
         except RetryError:
-            self.__add_comment__("The user authentication was a failure.")
+            self.__add_comment__(logger, "The user authentication was a failure.")
             output_context.exit_code = 0  # for task success
 
         except AbortException:
@@ -59,6 +60,10 @@ class ExampleAbort(BaseTask):
         else:
             response.raise_for_status()
 
+    def update_status(self, retry_state):
+        status = f"Retrying: {retry_state.attempt_number}"
+        self.__set_status_line__(logger, status)
+
     def abort(self) -> None:
         self.aborted = True
 
@@ -70,5 +75,4 @@ class ExampleAbort(BaseTask):
         logger.debug("Abort requested")
         sys.exit(104)
 
-    def __add_comment__(self, comment: str) -> None:
-        logger.debug(f"##[start: comment]{comment}##[end: comment]")
+
