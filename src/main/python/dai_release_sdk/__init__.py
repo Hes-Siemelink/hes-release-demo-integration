@@ -1,4 +1,4 @@
-from .base_plugin import get_task_properties, create_output_context_file, BasePlugin
+from .base_plugin import get_task_properties, update_output_context_file, BasePlugin
 from .base_task import BaseTask
 from .input_context import PropertyDefinition, CiDefinition, TaskContext, AutomatedTaskAsUserContext, ReleaseContext, InputContext
 from .masked_io import MaskedIO

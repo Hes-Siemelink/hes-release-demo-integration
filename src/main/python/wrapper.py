@@ -7,7 +7,7 @@ import logger_config
 import sys
 import logging
 import signal
-from dai_release_sdk import get_task_properties, create_output_context_file, AbortException, OutputContext
+from dai_release_sdk import get_task_properties, update_output_context_file, AbortException, OutputContext
 from example_api import ExampleApi
 from example_abort import ExampleAbort
 
@@ -53,4 +53,4 @@ if __name__ == "__main__":
 
     finally:
         logger.debug("Creating output context file")
-        create_output_context_file(output_context)
+        update_output_context_file(output_context)

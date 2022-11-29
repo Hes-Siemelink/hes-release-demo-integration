@@ -34,7 +34,7 @@ def get_task_properties():
     return task_properties
 
 
-def create_output_context_file(output_context: OutputContext):
+def update_output_context_file(output_context: OutputContext):
     with open(output_context_file, "w") as data_output:
         output_content = json.dumps(output_context.to_dict())
         encrypted_json = encryptor.encrypt(output_content)
