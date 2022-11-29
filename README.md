@@ -2,7 +2,7 @@
 
 This project serves as a template for developing a Python-based container plugin.
 
-## xlr-container-python-sdk
+## SDK Project
 https://github.com/xebialabs/xlr-container-python-sdk
 
 ## The SDK is available for testing at test.pypi.org
