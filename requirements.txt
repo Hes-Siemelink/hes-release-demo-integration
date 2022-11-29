@@ -3,3 +3,5 @@ dataclasses-json==0.5.7
 pycryptodomex==3.15.0
 PyYAML==6.0
 tenacity==8.0.1
+--extra-index-url https://test.pypi.org/simple/
+dai-release-sdk==0.0.1
