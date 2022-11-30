@@ -1,15 +1,15 @@
-# The below imports should always be the first in this file.
-from __future__ import annotations
+# BasePlugin import should always be the first in this file.
 from dai_release_sdk import BasePlugin
-import logger_config
-# The above imports should always be the first in this file.
 
 import sys
 import logging
 import signal
-from dai_release_sdk import get_task_properties, update_output_context_file, AbortException, OutputContext
+from dai_release_sdk import get_task_properties, update_output_context_file, setup_logging
+from dai_release_sdk import AbortException, OutputContext
 from example_api import ExampleApi
 from example_abort import ExampleAbort
+
+setup_logging(package=__name__, file_name="logger.yaml", default_level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
