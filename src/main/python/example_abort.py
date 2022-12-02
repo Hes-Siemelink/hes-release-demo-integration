@@ -12,24 +12,24 @@ logger = logging.getLogger(__name__)
 class ExampleAbort(BaseTask):
     """ The developer should extend the BaseTask and override the 'exec' and 'abort' methods."""
 
-    def __init__(self, param):
+    def __init__(self, params):
         self.aborted = False
-        self.param = param
+        self.params = params
 
     def exec(self) -> OutputContext:
         """ Here is the task logic. It should return 'OutputContext' object. """
 
         output_context: OutputContext = OutputContext(-1, {}, [])
-        logger.debug(f"Task property values are  : {self.param}")
+        logger.debug(f"Task property values are  : {self.params}")
 
         try:
-            request_url = self.param['url'] + self.param['username'] + "/" + self.param['password']
+            request_url = self.params['url'] + self.params['username'] + "/" + self.params['password']
 
             # Here, we wait for 'retry_waiting_time' seconds before attempting to retry and
             # we retry for 'max_retry_attempts' times.
 
-            retryer = Retrying(wait=wait_fixed(self.param['retryWaitingTime']),
-                               stop=stop_after_attempt(self.param['retryCount']),
+            retryer = Retrying(wait=wait_fixed(self.params['retryWaitingTime']),
+                               stop=stop_after_attempt(self.params['retryCount']),
                                after=self.update_status)
 
             retryer(self.authenticate_user, request_url)

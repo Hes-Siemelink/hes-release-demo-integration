@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 class ExampleApi(BaseTask):
     """ The developer should extend the BaseTask and override the 'exec' and 'abort' methods."""
 
-    def __init__(self, param):
-        self.param = param
-        self.task_id = param['task_id']
+    def __init__(self, params):
+        self.params = params
+        self.task_id = params['task_id']
         self.title = None
         self.brand = None
 
@@ -21,10 +21,10 @@ class ExampleApi(BaseTask):
         """ Here is the task logic. It should return 'OutputContext' object. """
 
         output_context: OutputContext = OutputContext(-1, {}, [])
-        logger.debug(f"Task property values are  : {self.param}")
+        logger.debug(f"Task property values are  : {self.params}")
 
         try:
-            request_url = self.param['url'] + self.param['productId']
+            request_url = self.params['url'] + self.params['productId']
             self.__add_comment__(logger, f"Request URL is {request_url}")
             response = requests.get(request_url)
             response.raise_for_status()
