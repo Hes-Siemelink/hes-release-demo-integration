@@ -20,6 +20,10 @@ loggers:
     level: DEBUG
     handlers: [ console ]
     propagate: false
+  DAI_SDK:
+    level: DEBUG
+    handlers: [ console ]
+    propagate: false
   __main__:
     level: DEBUG
     handlers: [ console ]

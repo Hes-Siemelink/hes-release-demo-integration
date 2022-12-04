@@ -1,4 +1,5 @@
 import logging
+import sys
 
 import requests
 from requests import HTTPError
@@ -25,7 +26,7 @@ class ExampleApi(BaseTask):
 
         try:
             request_url = self.params['url'] + self.params['productId']
-            self.__add_comment__(logger, f"Request URL is {request_url}")
+            self.__add_comment__(f"Request URL is {request_url}")
             response = requests.get(request_url)
             response.raise_for_status()
             self.title = response.json()['title']
@@ -47,5 +48,7 @@ class ExampleApi(BaseTask):
         return output_context
 
     def abort(self) -> None:
-        raise AbortException
+        # Here, write your abort logic
+        logger.debug("Abort requested")
+        sys.exit(104)
 

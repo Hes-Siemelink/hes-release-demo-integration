@@ -33,11 +33,11 @@ class ExampleAbort(BaseTask):
                                after=self.update_status)
 
             retryer(self.authenticate_user, request_url)
-            self.__add_comment__(logger, "The user authentication was successful.")
+            self.__add_comment__("The user authentication was successful.")
             output_context.exit_code = 0
 
         except RetryError:
-            self.__add_comment__(logger, "The user authentication was a failure.")
+            self.__add_comment__("The user authentication was a failure.")
             output_context.exit_code = 0  # for task success
 
         except AbortException:
@@ -62,7 +62,7 @@ class ExampleAbort(BaseTask):
 
     def update_status(self, retry_state):
         status = f"Retrying: {retry_state.attempt_number}"
-        self.__set_status_line__(logger, status)
+        self.__set_status_line__(status)
 
     def abort(self) -> None:
         self.aborted = True
@@ -71,7 +71,7 @@ class ExampleAbort(BaseTask):
         return self.aborted
 
     def handle_abort(self) -> None:
-        # Write your abort logic
+        # Here, write your abort logic
         logger.debug("Abort requested")
         sys.exit(104)
 
