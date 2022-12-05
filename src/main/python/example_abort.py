@@ -23,7 +23,8 @@ class ExampleAbort(BaseTask):
         logger.debug(f"Task property values are  : {self.params}")
 
         try:
-            request_url = self.params['url'] + self.params['username'] + "/" + self.params['password']
+            server = self.params['server']
+
 
             # Here, we wait for 'retry_waiting_time' seconds before attempting to retry and
             # we retry for 'max_retry_attempts' times.
@@ -32,33 +33,31 @@ class ExampleAbort(BaseTask):
                                stop=stop_after_attempt(self.params['retryCount']),
                                after=self.update_status)
 
-            retryer(self.authenticate_user, request_url)
+            response = retryer(self.authenticate_user, server)
             self.__add_comment__("The user authentication was successful.")
+            output_context.output_properties['statusCode'] = response.status_code
             output_context.exit_code = 0
 
         except RetryError:
-            self.__add_comment__("The user authentication was a failure.")
-            output_context.exit_code = 0  # for task success
+            logger.error("The user authentication was a failure.", exc_info=True)
 
         except AbortException:
             self.handle_abort()
 
         except Exception:
             logger.error("Unexpected error occurred.", exc_info=True)
-            output_context.exit_code = 102
-
-        finally:
-            output_context.output_properties['attemptNumber'] = retryer.statistics['attempt_number']
 
         return output_context
 
-    def authenticate_user(self, request_url):
-        response = requests.get(request_url)
+    def authenticate_user(self, server):
+        auth = (server['username'], server['password'])
+        response = requests.get(server['url'], auth=auth)
         logger.debug(f"Status code : {response.status_code}, Datetime : {datetime.now()}")
         if self.is_aborted():
             raise AbortException()
         else:
             response.raise_for_status()
+        return response
 
     def update_status(self, retry_state):
         status = f"Retrying: {retry_state.attempt_number}"
@@ -73,6 +72,6 @@ class ExampleAbort(BaseTask):
     def handle_abort(self) -> None:
         # Here, write your abort logic
         logger.debug("Abort requested")
-        sys.exit(104)
+        sys.exit(1)
 
 
