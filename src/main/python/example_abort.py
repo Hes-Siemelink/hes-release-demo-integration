@@ -1,9 +1,9 @@
 import logging
 import sys
 
-import requests
+
 from datetime import datetime
-from dai_release_sdk import BaseTask, OutputContext, AbortException
+from dai_release_sdk import BaseTask, OutputContext, AbortException, HttpRequest
 from tenacity import wait_fixed, stop_after_attempt, Retrying, RetryError
 
 logger = logging.getLogger(__name__)
@@ -15,6 +15,7 @@ class ExampleAbort(BaseTask):
     def __init__(self, params):
         self.aborted = False
         self.params = params
+        self.request = HttpRequest(params['server'], params['username'], params['password'])
 
     def exec(self) -> OutputContext:
         """ Here is the task logic. It should return 'OutputContext' object. """
@@ -23,17 +24,14 @@ class ExampleAbort(BaseTask):
         logger.debug(f"Task property values are  : {self.params}")
 
         try:
-            server = self.params['server']
-
-
-            # Here, we wait for 'retry_waiting_time' seconds before attempting to retry and
+            # Here, we wait for 'retry_waiting_time' seconds before attempting to retry
             # we retry for 'max_retry_attempts' times.
 
             retryer = Retrying(wait=wait_fixed(self.params['retryWaitingTime']),
                                stop=stop_after_attempt(self.params['retryCount']),
                                after=self.update_status)
 
-            response = retryer(self.authenticate_user, server)
+            response = retryer(self.authenticate_user)
             self.__add_comment__("The user authentication was successful.")
             output_context.output_properties['statusCode'] = response.status_code
             output_context.exit_code = 0
@@ -49,9 +47,8 @@ class ExampleAbort(BaseTask):
 
         return output_context
 
-    def authenticate_user(self, server):
-        auth = (server['username'], server['password'])
-        response = requests.get(server['url'], auth=auth)
+    def authenticate_user(self):
+        response = self.request.do_request(method='GET', context='/basic-auth/user/login')
         logger.debug(f"Status code : {response.status_code}, Datetime : {datetime.now()}")
         if self.is_aborted():
             raise AbortException()

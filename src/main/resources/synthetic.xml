@@ -11,7 +11,7 @@
             <property name="accessTokenUrl" default="empty" hidden="true"/>
             <property name="authenticationMethod" kind="enum"
                       enum-class="com.xebialabs.xlrelease.domain.configuration.HttpConnection$AuthenticationMethod"
-                      hidden="true" default="Basic">
+                      default="Basic">
                 <enum-values>
                     <value>Basic</value>
                 </enum-values>
@@ -26,6 +26,7 @@
         <!-- required capabilities required by all the tasks-->
         <property name="defaultRequiredCapabilities" default="container" required="true" kind="set_of_string" hidden="true" transient="true"/>
 
+        <property name="additionalCapabilities" default="container" required="false" kind="set_of_string" hidden="true" transient="true"/>
         <!-- task UI properties -->
         <property name="iconLocation" default="test.png" hidden="true"/>
         <property name="taskColor" hidden="true" default="#667385" />

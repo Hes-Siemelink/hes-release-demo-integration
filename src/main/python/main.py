@@ -1,4 +1,4 @@
-# base_config import should always be the first in this file.
+# The 'base_config' import statement should always be the first line in this file.
 from dai_release_sdk import base_config
 
 import logging
