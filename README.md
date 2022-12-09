@@ -10,6 +10,14 @@ https://github.com/xebialabs/xlr-container-python-sdk
 The SDK is available for testing at test.pypi.org:  
 https://test.pypi.org/project/dai-release-sdk/
 
+## How to create your own project
+
+Create a duplicate of this project to start developing youre own container-based integration. 
+
+Use the [instructions from GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository). Note: this creates a duplicate, not a fork.
+
+This should also work for other flavors of Git.
+
 
 ## How to run 
 
