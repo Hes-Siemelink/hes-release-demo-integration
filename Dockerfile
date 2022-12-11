@@ -34,6 +34,6 @@ WORKDIR $APP_HOME
 
 ENV PATH="/opt/venv/bin:$PATH"
 
-ENTRYPOINT ["python", "-m", "main"]
+ENTRYPOINT ["python", "-m", "dai_release_sdk.wrapper"]
 
 
