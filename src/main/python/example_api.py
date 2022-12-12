@@ -2,7 +2,7 @@ import logging
 import requests
 from dai_release_sdk import BaseTask
 
-logger = logging.getLogger('DAI_SDK')
+logger = logging.getLogger('DAI')
 
 
 class ExampleApi(BaseTask):

@@ -6,7 +6,7 @@ from dai_release_sdk import BaseTask, AbortException, HttpRequest
 from requests import Response
 from tenacity import wait_fixed, stop_after_attempt, Retrying, RetryError
 
-logger = logging.getLogger('DAI_SDK')
+logger = logging.getLogger('DAI')
 
 
 class ExampleAbort(BaseTask):
