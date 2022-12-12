@@ -8,6 +8,7 @@ logger = logging.getLogger('DAI')
 class ExampleApi(BaseTask):
 
     def __init__(self, params):
+        super().__init__()
         self.params = params
 
     def execute(self) -> None:

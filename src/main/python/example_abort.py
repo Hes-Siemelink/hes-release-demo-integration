@@ -12,6 +12,7 @@ logger = logging.getLogger('DAI')
 class ExampleAbort(BaseTask):
 
     def __init__(self, params):
+        super().__init__()
         self.aborted = False
         self.params = params
         self.request = HttpRequest(params['server'], params['username'], params['password'])
