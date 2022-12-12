@@ -12,7 +12,7 @@ class TestTasks(unittest.TestCase):
         params = {'task_id': 'task_1', 'productId': '1'}
         expected_output = {'productName': 'iPhone 9', 'brand': 'Apple'}
         example_api = ExampleApi(params)
-        self.execute('Example API', example_api, expected_output)
+        self.execute_test('Example API', example_api, expected_output)
 
     def test_example_abort(self):
         server = {'url': 'https://httpbin.org', 'username': 'user', 'password': 'login',
@@ -21,9 +21,9 @@ class TestTasks(unittest.TestCase):
                   'password': ''}
         expected_output = {'statusCode': 200}
         example_abort = ExampleAbort(params)
-        self.execute('Example Abort', example_abort, expected_output)
+        self.execute_test('Example Abort', example_abort, expected_output)
 
-    def execute(self, test_name, task_obj, expected_output):
+    def execute_test(self, test_name, task_obj, expected_output):
         task_obj.execute()
         actual_output = task_obj.get_output_properties()
         print(f"{test_name} expected output : {expected_output}")
