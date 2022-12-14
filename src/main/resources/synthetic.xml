@@ -47,4 +47,10 @@
         <property name="statusCode" kind="integer" category="output" description="Responded HTTP Status"/>
     </type>
 
+    <type type="ContainerTemplate.reportExample" label='Reporting Records Example' extends="ContainerTemplate.BaseTask">
+        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_reporting_records.py"/>
+        <property name="inputValue" category="input" kind="string" default="Hello"/>
+        <property name="outputValue" kind="string" category="output"/>
+    </type>
+
 </synthetic>
