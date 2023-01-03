@@ -6,7 +6,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerTagImage
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-  id "com.bmuschko.docker-remote-api" version "8.0.0"
+  id "com.bmuschko.docker-remote-api" version "8.1.0"
   id "java"
   id "base"
 }
@@ -15,14 +15,20 @@ targetCompatibility = JavaVersion.VERSION_11
 
 project.version = '1.0.0'
 
+ext{
+    registry= [
+        url : 'xlr-registry:5050',
+        org : 'digitalai'
+    ]
+}
 
 processResources {
-  filesMatching('**/synthetic.xml') {
+  filesMatching(['**/synthetic.xml', '**/plugin-version.properties']) {
     filter(ReplaceTokens, tokens: [
         'project.version': project.version,
         'project.name'   : project.name,
-        'registry.url'   : 'xlr-registry:5050',
-        'registry.org'   : 'digitalai'
+        'registry.url'   : registry.url,
+        'registry.org'   : registry.org
     ])
   }
 }
@@ -45,27 +51,27 @@ def buildPluginImage = tasks.register("k3dBuildPluginImage", DockerBuildImage) {
     labels.put('product', 'release')
     labels.put('pluginVersion', project.version)
     labels.put('pluginName', project.name)
-    images.add("digitalai/${project.name}:${project.version}")
+    images.add("${registry.org}/${project.name}:${project.version}")
 }
 
 def tagImage = tasks.register("k3dTagImageForRegistry", DockerTagImage) {
   dependsOn(buildPluginImage)
   targetImageId buildPluginImage.get().getImageId()
-  repository = "xlr-registry:5050/digitalai/${project.name}"
+  repository = "${registry.url}/${registry.org}/${project.name}"
   tag = "${project.version}"
 }
 
 def pushImageToRegistry = tasks.register("k3dPushImageToRegistry", DockerPushImage) {
   dependsOn(tagImage)
-  images = ["xlr-registry:5050/digitalai/${project.name}:${project.version}"]
+  images = ["${registry.url}/${registry.org}/${project.name}:${project.version}"]
 }
 
 def cleanBaseImage = tasks.register("k3dCleanBaseImageFromLocalDocker", DockerRemoveImage) {
-  imageId = "digitalai/${project.name}:${project.version}"
+  imageId = "${registry.org}/${project.name}:${project.version}"
 }
 
 def cleanImage = tasks.register("k3dCleanImageFromLocalDocker", DockerRemoveImage) {
-  imageId = "xlr-registry:5050/digitalai/${project.name}:${project.version}"
+  imageId = "${registry.url}/${registry.org}/${project.name}:${project.version}"
 }
 
 def publishTask = tasks.register("k3dPublishImageToRegistry") {
