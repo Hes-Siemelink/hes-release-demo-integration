@@ -53,3 +53,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 **/__pycache__
+
+tmp/*

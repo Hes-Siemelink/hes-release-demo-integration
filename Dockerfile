@@ -1,39 +1,39 @@
-# temp stage
-FROM python:3.10-alpine as builder
-LABEL stage=builder
+FROM python:alpine3.17
+
+# prevent Python from writing bytecode files
 ENV PYTHONDONTWRITEBYTECODE 1
+
+# run Python in unbuffered mode
 ENV PYTHONUNBUFFERED 1
-ENV APP_HOME=/app
 
-RUN apk update && apk upgrade && apk add gcc g++
+# define environment variables for the application path, input location, and output location
+ENV APP_HOME /app
+ENV INPUT_LOCATION /input
+ENV OUTPUT_LOCATION /output
 
+# If needed, update the package manager and install the GCC and G++ compilers
+# RUN apk update && apk upgrade && apk add gcc g++
+
+# copy the app directory to the image
 COPY app $APP_HOME/
 
+# copy the requirements.txt to the image
+COPY requirements.txt $APP_HOME/
+
+# set the working directory to the app directory
 WORKDIR $APP_HOME
 
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# create a new virtual environment
+RUN python -m venv /venv
 
-RUN pip install --upgrade pip
-RUN pip install install -r $APP_HOME/requirements.txt
+# activate the virtual environment
+ENV PATH="/venv/bin:$PATH"
 
+# If needed, upgrade pip
+# RUN pip install --upgrade pip
 
-# final stage
-FROM python:3.10-alpine
+# install the dependencies from the requirements.txt file
+RUN pip install -r requirements.txt
 
-ENV APP_HOME=/app
-ENV INPUT_LOCATION=/input
-ENV OUTPUT_LOCATION=/output
-
-RUN apk update && apk upgrade && apk add gcc g++
-
-COPY --from=builder /opt/venv /opt/venv
-COPY --from=builder $APP_HOME $APP_HOME
-
-WORKDIR $APP_HOME
-
-ENV PATH="/opt/venv/bin:$PATH"
-
+# set the entrypoint for the container
 ENTRYPOINT ["python", "-m", "dai_release_sdk.wrapper"]
-
-

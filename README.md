@@ -12,7 +12,7 @@ https://test.pypi.org/project/dai-release-sdk/
 
 ## How to create your own project
 
-Create a duplicate of this project to start developing youre own container-based integration. 
+Create a duplicate of this project to start developing your own container-based integration. 
 
 Use the [instructions from GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository). Note: this creates a duplicate, not a fork.
 
@@ -76,11 +76,25 @@ In the Release UI, check the **Connections** page for Remote Runner connections.
 
 ### 6. Create plugin container
 
-On the plugin project, run the build with 
+On the plugin project, Run build script just to build the plugin jar: 
 
-    ./gradlew clean build
+Unix/macOS
 
-This will create the plugin jar and publish the image to `xlr-registry:5050`.
+    sh build.sh
+
+Windows
+
+    build.bat
+
+Run build script to build the plugin jar and publish the image to `xlr-registry:5050`.
+
+Unix/macOS
+
+    sh build.sh --buildImage
+
+Windows
+
+    build.bat --buildImage
 
 ### 7. Install plugin into Release
 
@@ -93,5 +107,17 @@ Then:
 
 ### 8. Test it!
 Create a template with the task **Container Template: API Example** and run it!
+
+### 9. Run the unit test
+
+Unix/macOS
+
+    python3 -m unittest tests/test_tasks.py
+
+Windows
+
+    py -m unittest tests\test_tasks.py
+
+
 
 
