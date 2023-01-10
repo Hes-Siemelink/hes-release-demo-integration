@@ -1,6 +1,6 @@
 import logging
 import requests
-from dai_release_sdk import BaseTask
+from digitalai.release.container import BaseTask
 
 logger = logging.getLogger('Digitalai')
 

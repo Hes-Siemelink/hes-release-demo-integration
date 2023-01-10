@@ -1,7 +1,7 @@
 import logging
 import sys
 import requests
-from dai_release_sdk import BaseTask, AbortException
+from digitalai.release.container import BaseTask, AbortException
 from tenacity import Retrying, RetryError, wait_fixed, stop_after_attempt
 
 logger = logging.getLogger('Digitalai')

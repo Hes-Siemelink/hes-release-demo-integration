@@ -5,10 +5,12 @@ This project serves as a template for developing a Python-based container plugin
 ## SDK Project
 
 This sample project is based on the SDK base defined here:  
+
 https://github.com/xebialabs/xlr-container-python-sdk
 
 The SDK is available for testing at test.pypi.org:  
-https://test.pypi.org/project/dai-release-sdk/
+
+https://test.pypi.org/project/digitalai
 
 ## How to create your own project
 
