@@ -55,9 +55,7 @@ mkdir build 2>/dev/null
 rm -f "build/$PLUGIN-$VERSION.jar" 2>/dev/null
 
 # Create a jar file from the contents of the tmp directory and place it in the build directory
-cd tmp
-tar -cvf "../build/$PLUGIN-$VERSION.jar" *
-cd ..
+cd tmp && zip -r "../build/$PLUGIN-$VERSION.jar" . && cd ..
 
 # Remove the tmp directory
 rm -rf tmp
