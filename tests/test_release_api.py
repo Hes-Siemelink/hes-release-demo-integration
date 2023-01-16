@@ -10,7 +10,7 @@ if __name__ == '__main__':
         print(f"Connection Result is : {conn_result}")
 
         releases_api = ReleasesApi(release_client)
-        variables = releases_api.releases_release_id_variables_get('Release9e06a6b933f4409e81c12ec62e82216e')
+        variables = releases_api.get_variables_for_release('Release9e06a6b933f4409e81c12ec62e82216e')
         print(variables)
     except:
         traceback.print_exc()
