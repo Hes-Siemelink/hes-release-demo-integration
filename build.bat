@@ -19,25 +19,28 @@ for /f "tokens=1,2 delims==" %%G in (project.properties) do (set %%G=%%H)
 xcopy /E /I resources tmp
 
 :: Replace placeholders in synthetic.xml with values from project.properties
-setlocal enabledelayedexpansion
 (for /f "delims=" %%i in (tmp\synthetic.xml) do (
     set "line=%%i"
+    setlocal enabledelayedexpansion
     set "line=!line:@project.name@=%PLUGIN%!"
     set "line=!line:@project.version@=%VERSION%!"
     set "line=!line:@registry.url@=%REGISTRY_URL%!"
     set "line=!line:@registry.org@=%REGISTRY_ORG%!"
     echo(!line!
+    endlocal
 ))>"tmp\synthetic.xml.bak"
 move tmp\synthetic.xml.bak tmp\synthetic.xml
+
 :: Replace placeholders in plugin-version.properties with values from project.properties
 (for /f "delims=" %%i in (tmp\plugin-version.properties) do (
     set "line=%%i"
+    setlocal enabledelayedexpansion
     set "line=!line:@project.name@=%PLUGIN%!"
     set "line=!line:@project.version@=%VERSION%!"
     echo(!line!
+    endlocal
 ))>"tmp\plugin-version.properties.bak"
 move tmp\plugin-version.properties.bak tmp\plugin-version.properties
-endlocal
 
 :: Create the build directory and remove any previously created jar file
 mkdir build 2>nul
@@ -45,7 +48,7 @@ del "build\%PLUGIN%-%VERSION%.jar" 2>nul
 
 :: Create a jar file from the contents of the tmp directory and place it in the build directory
 cd tmp
-tar -cvf "..\build\%PLUGIN%-%VERSION%.jar" *
+zip "..\build\%PLUGIN%-%VERSION%.jar" *
 cd ..
 
 :: Remove the tmp directory

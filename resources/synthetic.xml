@@ -29,15 +29,13 @@
         <property name="taskColor" hidden="true" default="#667385"/>
     </type>
 
-    <type type="ContainerTemplate.apiExample" label='API Example' extends="ContainerTemplate.BaseTask">
-        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_api.py"/>
+    <type type="ContainerTemplate.ExampleApi" label='API Example' extends="ContainerTemplate.BaseTask">
         <property name="productId" category="input" kind="string" default="1"/>
         <property name="productName" kind="string" category="output"/>
         <property name="brand" kind="string" category="output"/>
     </type>
 
-    <type type="ContainerTemplate.abortExample" label='Abort Example' extends="ContainerTemplate.BaseTask">
-        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_abort.py"/>
+    <type type="ContainerTemplate.ExampleAbort" label='Abort Example' extends="ContainerTemplate.BaseTask">
         <property name="server" category="input" referenced-type="ContainerTemplate.Server" kind="ci" description="Server to connect to"/>
         <property name="username" category="input" required="false" description="Overrides the username used to connect to the server"/>
         <property name="password" password="true" category="input" required="false" description="Overrides the password used to connect to the server"/>
@@ -46,8 +44,7 @@
         <property name="statusCode" kind="integer" category="output" description="Responded HTTP Status"/>
     </type>
 
-    <type type="ContainerTemplate.reportExample" label='Reporting Records Example' extends="ContainerTemplate.BaseTask">
-        <property name="scriptLocation" category="script" kind="string" hidden="true" default="example_reporting_records.py"/>
+    <type type="ContainerTemplate.ExampleReportingRecords" label='Reporting Records Example' extends="ContainerTemplate.BaseTask">
         <property name="inputValue" category="input" kind="string" default="Hello"/>
         <property name="outputValue" kind="string" category="output"/>
     </type>
