@@ -1,1 +1,43 @@
+name: Build plugin jar
 
+on:
+  push:
+    branches:
+      - master
+      - release/*
+  pull_request:
+
+jobs:
+  build_windows:
+    name: Build on Windows
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build batch script
+        shell: cmd
+        run: |
+          echo "Running build batch script..."
+          build.bat
+
+  build_linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build bash script
+        run: |
+          echo "Running build bash script..."
+          sh build.sh
+
+  build_macos:
+    name: Build on MacOS
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build bash script
+        run: |
+          echo "Running build bash script..."
+          sh build.sh
