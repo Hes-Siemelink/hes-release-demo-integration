@@ -1,7 +1,7 @@
 import unittest
 
-from app.example_abort import ExampleAbort
-from app.example_api import ExampleApi
+from src.example_abort import ExampleAbort
+from src.example_api import ExampleApi
 
 
 class TestTasks(unittest.TestCase):
