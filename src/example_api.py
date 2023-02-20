@@ -39,6 +39,7 @@ class ExampleApi(BaseTask):
             output_properties['brand'] = response.json()['brand']
 
         # Catch, log and set the exit code any unexpected errors that occurred
-        except Exception:
+        except Exception as e:
             logger.error("Unexpected error occurred.", exc_info=True)
             self.set_exit_code(1)
+            self.set_error_message(str(e))
