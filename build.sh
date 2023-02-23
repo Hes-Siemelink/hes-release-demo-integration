@@ -12,7 +12,7 @@ while [ $# -gt 0 ]; do
 done
 
 # Remove the tmp directory and create it again
-rm -rf tmp
+rm -rf tmp 2>/dev/null
 mkdir tmp 2>/dev/null
 
 #Remove all the carriage returns

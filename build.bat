@@ -9,7 +9,7 @@ for %%i in (%*) do (
 )
 
 :: Remove the tmp directory and create it again
-rd /S /Q tmp
+rd /S /Q tmp 2>nul
 mkdir tmp 2>nul
 
 :: Read project properties from project.properties file and set them as variables
@@ -47,9 +47,8 @@ mkdir build 2>nul
 del "build\%PLUGIN%-%VERSION%.jar" 2>nul
 
 :: Create a jar file from the contents of the tmp directory and place it in the build directory
-cd tmp
-zip "..\build\%PLUGIN%-%VERSION%.jar" *
-cd ..
+powershell Compress-Archive -Path tmp\* -DestinationPath build\%PLUGIN%-%VERSION%.zip
+move build\%PLUGIN%-%VERSION%.zip build\%PLUGIN%-%VERSION%.jar
 
 :: Remove the tmp directory
 rd /S /Q tmp
