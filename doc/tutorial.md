@@ -89,6 +89,67 @@ _Topics covered:_
   * **HelloWorld** is a unique name for integration.
   * **Base64ToText** is a user-defined python class name. The SDK will find the Base64ToText class in src folder and create the instance.
 
+#### _Explains base64_to_text.py :_
+  ```python
+    import logging
+    import requests
+    from digitalai.release.container import BaseTask
+    
+    logger = logging.getLogger('Digitalai')
+    
+    class Base64ToText(BaseTask):
+    
+        def __init__(self, params):
+            super().__init__()
+            self.params = params
+            self.textValue = None
+    
+        def execute(self) -> None:
+            try:
+                base64_value = self.params['base64Value']
+                response = requests.get(f'https://httpbin.org/base64/{base64_value}')
+                response.raise_for_status()
+                if 'Incorrect Base64 data' in response.text:
+                    raise ValueError(response.text)
+                self.textValue = response.text
+            except Exception as e:
+                logger.error("Unexpected error occurred.", exc_info=True)
+                self.set_exit_code(1)
+                self.set_error_message(str(e))
+            finally:
+                output_properties = self.get_output_properties()
+                output_properties["textValue"] = self.textValue
+  ```
+  * The **Base64ToText** class is a subclass of BaseTask abstract class, which represents a task that can be executed.   
+  * This task is specifically designed to convert a given Base64 encoded value to plain text.
+  * The **Base64ToText** class has the following attributes:
+    * **params**: A dictionary containing the parameters required for executing the task. This value will be passed by the SDK at runtime.
+    * **textValue**: A variable that stores the resulting plain text value obtained after decoding the Base64 encoded value.  
+  * The **Base64ToTex**t class has the following methods:
+    * **__init__(self, params)**: Initializes an instance of the Base64ToText class. 
+      * **super().__init__()**: It calls the __init__() method of its superclass BaseTask. It must be present.
+      * sets the params and textValue attributes to their default values.
+    * **execute(self)**: This method is an implementation of the abstract method **execute()** defined in the BaseTask class. It represents the main logic of the task. This method does the following:
+      * It retrieves the base64Value parameter from the params dictionary.
+      * It makes a GET request to https://httpbin.org/base64/{base64_value} endpoint with base64_value as the value of the Base64 encoded string.
+      * It checks whether the response returned contains the message "Incorrect Base64 data". If yes, it raises a ValueError with the response text.
+      * If the response is successful, it sets the textValue attribute with the plain text obtained by decoding the Base64 encoded string.
+      * If any exception occurs during execution, an error message is logged using the **logger** object and the exit code of the task is set to 1 using the **set_exit_code()** method from **BaseTask**. Additionally, the error message is set using the **set_error_message()** method from **BaseTask**.
+      * Finally, the **finally** block is executed, where the textValue attribute is added to the output properties dictionary using the **get_output_properties()** method from **BaseTask**. This dictionary is used to store the output of the task, which can be accessed by other tasks in the workflow.
+  * The **BaseTask** abstract class is a blueprint for defining tasks in the SDK. It has several methods and attributes that can be utilized by subclasses of the BaseTask class. 
+  * **BaseTask** abstract class contains the following methods and attributes:
+    * **__init__(self):** Initializes an instance of the BaseTask class. It creates an OutputContext object with an initial exit code of 0 and an empty dictionary of output properties.
+    * **execute_task(self) -> None**: Executes the task by calling the execute method. If an AbortException is raised during execution, the task's exit code is set to 1, and the program exits with a status code of 1. If any other exception is raised, the task's exit code is also set to 1.
+    * **execute(self) -> None**: This is an abstract method that must be implemented by subclasses of BaseTask. It represents the main logic of the task.
+    * **abort(self) -> None**: Sets the task's exit code to 1 and exits the program with a status code of 1.
+    * **get_output_context(self) -> OutputContext**: Returns the OutputContext object associated with the task.
+    * **get_output_properties(self) -> Dict[str, Any]**: Returns the output properties dictionary of the task's OutputContext object.
+    * **set_exit_code(self, value) -> None**: Sets the exit code of the task's OutputContext object.
+    * **set_error_message(self, value) -> None**: Sets the error message of the task's OutputContext object.
+    * **add_comment(self, comment: str) -> None**: Logs a comment of the task.
+    * **set_status_line(self, status_line: str) -> None**: Set the status of the task.
+    * **add_reporting_record(self, reporting_record: Any) -> None**: Adds a reporting record to the OutputContext.
+
 ### _Explains how to run local tests_
 
 _(Optional) Explains how to run integration tests in container test framework_
