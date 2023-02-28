@@ -10,17 +10,17 @@ _Topics covered:_
 * _Architecture: Release instance + Remote Runner_
 * _Tasks are developed as container + traditional plugin jar containing metadata_
 
-## Hello World plugin
+## Hello World Plugin
 
-### Code & test
+### Code & Test
 
-_Tutorial walks you through setting up a Python 3 project_
+### _Tutorial walks you through setting up a Python 3 project_
 
 * **Install Python 3:** If you haven't already done so, you'll need to install Python 3 on your computer. You can download the latest version of Python from the official website at https://www.python.org/downloads/. Make sure to select the appropriate installer for your operating system.
 * **Choose an IDE or Text Editor:** You can write Python code using any text editor, but using an IDE (Integrated Development Environment) will help you manage your project better. Some popular IDEs for Python include PyCharm, Visual Studio Code, and Spyder.
 * **Create a new project:** Open your IDE and create a new project. This will typically involve creating a new folder where your project files will be stored.
 
-_Explains how to create a git project from template_
+### _Explains how to create a git project from template_
 
 * **Install Git:** If you haven't already done so, you'll need to install Git on your computer. You can download the latest version of Git from the official website at https://git-scm.com/downloads. Make sure to select the appropriate installer for your operating system.
 * **Open a Terminal or Command Prompt:** Open a terminal or command prompt on your computer.
@@ -39,13 +39,14 @@ _Explains how to create a git project from template_
 * This command will change your directory to the cloned repository and install the required Python packages listed in the requirements.txt file.
 
 
-_(Optional) Explains how to set up IDE_
+### _(Optional) Explains how to set up IDE_
 
 * **Install PyCharm:** If you haven't already done so, you'll need to download and install PyCharm on your computer. You can download the latest version of PyCharm from the official website at https://www.jetbrains.com/pycharm/download/. Make sure to select the appropriate installer for your operating system.
 * **Open the project in PyCharm:** Open PyCharm and select "Open" from the welcome screen. Navigate to the directory where you cloned the project and select it. Click "Open" to open the project in PyCharm.
 * **Configure the project interpreter:** PyCharm needs to know which version of Python to use for your project. To configure the project interpreter, go to File > Settings > Project: xlr-container-helloworld-integration > Python Interpreter. Click on the gear icon and select "Add". From the dropdown menu, select "New Environment" and choose the appropriate version of Python. Click "OK" to create the new interpreter.
 
-_Explains project files for xlr-container-helloworld-integration_
+### _Explains project files for xlr-container-helloworld-integration_
+
 * **resources/helloworld.png :** This file is the plugin icon for the project.
 * **resources/plugin-version.properties :** This file contains the plugin name and version. The placeholder values will be replaced by the build script.
 * **resources/synthetic.xml :** This file contains the task released inputs and output details. It defines the input and output fields for the task, as well as any additional properties or configurations that may be necessary.
@@ -57,7 +58,37 @@ _Explains project files for xlr-container-helloworld-integration_
 * **README.md :** This file is the readme for the project. It includes information about the project, its purpose, and how to use it. It also includes any relevant installation, configuration, and usage instructions.
 * **requirements.txt :** It includes a list of Python packages and their respective versions that are required to run the project. These packages can be installed using the pip package manager.
 
-_Explains how to run local tests_
+### _Explains coding for xlr-container-helloworld-integration_
+
+#### _Explains synthetic.xml : _
+
+  ```xml
+  <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+    <type type="HelloWorld.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
+        <!-- Container image - location of the task logic -->
+        <property name="image" required="true" hidden="true" default="@registry.url@/@registry.org@/@project.name@:@project.version@" transient="true"/>
+        <!-- Required capabilities required by all the tasks-->
+        <property name="defaultRequiredCapabilities" default="container" required="true" kind="set_of_string" hidden="true" transient="true"/>
+        <property name="additionalCapabilities" default="container" required="false" kind="set_of_string" hidden="true" transient="true"/>
+        <!-- Task UI properties -->
+        <property name="iconLocation" default="helloworld.png" hidden="true"/>
+        <property name="taskColor" hidden="true" default="#667385"/>
+    </type>
+    <type type="HelloWorld.Base64ToText" extends="HelloWorld.BaseTask" description="Decode Base64 to text.">
+        <property name="base64Value" category="input"  default="SGVsbG8gV29ybGQ=" description="Enter the text"/>
+        <property name="textValue" category="output" description="Decoded text value"/>
+    </type>
+  </synthetic>
+  ```
+  * The synthetic.xml file that describes the task released inputs and output details for the HelloWorld.Base64ToText task.
+  * **<type>** Defines a custom task type with a unique name, a parent type to extend, and any additional properties or configurations that the task requires. 
+  * **HelloWorld.BaseTask** type defines a container image property and default capabilities for task.
+  * **HelloWorld.Base64ToText** type defines properties for input and output values for task.
+  * **Base64ToText** is a user-defined python class name. The SDK will find the Base64ToText class in src folder and create the instance.
+
+### _Explains how to run local tests_
 
 _(Optional) Explains how to run integration tests in container test framework_
 
