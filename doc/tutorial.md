@@ -60,7 +60,7 @@ _Topics covered:_
 
 ### _Explains coding for xlr-container-helloworld-integration_
 
-#### _Explains synthetic.xml : _
+#### _Explains synthetic.xml :_
 
   ```xml
   <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -86,6 +86,7 @@ _Topics covered:_
   * **<type>** Defines a custom task type with a unique name, a parent type to extend, and any additional properties or configurations that the task requires. 
   * **HelloWorld.BaseTask** type defines a container image property and default capabilities for task.
   * **HelloWorld.Base64ToText** type defines properties for input and output values for task.
+  * **HelloWorld** is a unique name for integration.
   * **Base64ToText** is a user-defined python class name. The SDK will find the Base64ToText class in src folder and create the instance.
 
 ### _Explains how to run local tests_
