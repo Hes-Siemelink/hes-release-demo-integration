@@ -152,7 +152,40 @@ _Topics covered:_
 
 ### _Explains how to run local tests_
 
-_(Optional) Explains how to run integration tests in container test framework_
+#### _Explains test_base64_to_text.py :_
+  ```python
+    import unittest
+    from src.base64_to_text import Base64ToText
+    
+    class TestBase64ToText(unittest.TestCase):
+    
+        def test_valid_base64Value(self):
+            params = {'task_id': 'task_1', 'base64Value': 'SGVsbG8gV29ybGQ='}
+            expected_output = 'Hello World'
+            base64_to_text = Base64ToText(params)
+            base64_to_text.execute()
+            output_properties = base64_to_text.get_output_properties()
+            actual_output = output_properties['textValue']
+            self.assertEqual(actual_output, expected_output)
+    
+        def test_invalid_base64Value(self):
+            params = {'task_id': 'task_2', 'base64Value': '1SGVsbG8gV29ybGQ='}
+            expected_output = None
+            base64_to_text = Base64ToText(params)
+            base64_to_text.execute()
+            output_properties = base64_to_text.get_output_properties()
+            actual_output = output_properties['textValue']
+            self.assertEqual(actual_output, expected_output)
+    
+    if __name__ == '__main__':
+        unittest.main()
+  ```
+* This code provides a simple test suite for the Base64ToText class which converts a Base64 encoded string to plain text. The test suite contains two test cases, one with a valid Base64 encoded string and another with an invalid string.
+* To run the test suite, Then, open a terminal or command prompt and navigate to the directory containing the file. Finally, run the following command:
+* ```python -m unittest test_base64_to_text.py ```
+* 
+
+### _(Optional) Explains how to run integration tests in container test framework_
 
 ### Build & Run
 
