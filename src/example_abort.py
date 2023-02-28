@@ -60,10 +60,7 @@ class ExampleAbort(BaseTask):
         base_url = self.server.get('url')
         context = '/basic-auth/user/login'
         url = base_url + context
-        if self.params.get('username') and self.params.get('password'):
-            auth = (self.params.get('username'), self.params.get('password'))
-        else:
-            auth = (self.server.get('username'), self.server.get('password'))
+        auth = (self.server.get('username'), self.server.get('password'))
         response = requests.get(url, auth=auth)
         logger.debug(f"Status code : {response.status_code}")
         if self.is_aborted():

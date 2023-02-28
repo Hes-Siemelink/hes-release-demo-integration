@@ -37,8 +37,6 @@
 
     <type type="ContainerTemplate.ExampleAbort" label='Abort Example' extends="ContainerTemplate.BaseTask">
         <property name="server" category="input" referenced-type="ContainerTemplate.Server" kind="ci" description="Server to connect to"/>
-        <property name="username" category="input" required="false" description="Overrides the username used to connect to the server"/>
-        <property name="password" password="true" category="input" required="false" description="Overrides the password used to connect to the server"/>
         <property name="retryWaitingTime" category="input" kind="integer" default="5" description="Waiting time for retry in sec"/>
         <property name="retryCount" category="input" kind="integer" default="10" description="Number of retries"/>
         <property name="statusCode" kind="integer" category="output" description="Responded HTTP Status"/>
