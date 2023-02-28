@@ -29,6 +29,7 @@ _Explains how to create a git project from template_
 * ``` 
     git clone https://github.com/xebialabs/xlr-container-helloworld-integration.git 
     ```
+  Or download from https://github.com/xebialabs/xlr-container-helloworld-integration
 * This will create a new directory with the name "xlr-container-helloworld-integration" in your current working directory, and clone the project files from the GitHub repository into that directory.
 * **Install Dependencies:** Navigate to the project directory and install the dependencies required for the project using the following command:
 * ``` 
