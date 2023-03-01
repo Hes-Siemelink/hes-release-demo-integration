@@ -183,26 +183,37 @@ _Topics covered:_
 * This code provides a simple test suite for the Base64ToText class which converts a Base64 encoded string to plain text. The test suite contains two test cases, one with a valid Base64 encoded string and another with an invalid string.
 * To run the test suite, Then, open a terminal or command prompt and navigate to the directory containing the file. Finally, run the following command:
 * ```python -m unittest test_base64_to_text.py ```
-* 
+* This command will execute the test suite and report the results in the terminal. If all tests pass, you should see an output like this:
+* ``` Ran 2 tests in 0.001s OK```
 
 ### _(Optional) Explains how to run integration tests in container test framework_
 
 ### Build & Run
 
-_Explains how to package a plugin_
+#### _Explains how to package a plugin and publish the image_
+* Configure the plugin and registry details in the **project.properties**
+* Open a command prompt and navigate to the root directory of your project.
+* Run the build script to build the plugin jar.
+  * Unix/macOS ``` sh build.sh ```
+  * Windows ``` build.bat ```
+  * This command will build a JAR file named **xlr-container-helloworld-integration-1.0.0.jar** in the 'build' folder.
+* Run the build script to build the plugin jar and pushes a Docker image.
+  * Unix/macOS ``` sh build.sh --buildImage ```
+  * Windows ``` build.bat --buildImage```
+  * This command will build a JAR file and push a Docker image named **xlr-container-helloworld-integration:1.0.0** to the specified registry.
 
-_Explains how to install Remote Runner into an existing Kubernetes environment using xl kube install_
+#### _Explains how to install Remote Runner into an existing Kubernetes environment using xl kube install_
 * _Configure Release and create token_
 * _Launch Remote Runner_
 * _Check if it self-registers in Release_
 
-_Explains how to install plugin jar into Release_
+#### _Explains how to install plugin jar into Release_
 
-_Explains how to publish container to be picked up by Remote Runner_
+#### _Explains how to publish container to be picked up by Remote Runner_
 
-_Explains how to create a template and run_
+#### _Explains how to create a template and run_
 
-_Explains how to troubleshoot if task isn’t picked up_
+#### _Explains how to troubleshoot if task isn’t picked up_
 
 ## Integration plugin
 
