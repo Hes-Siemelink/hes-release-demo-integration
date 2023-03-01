@@ -123,7 +123,7 @@ _Topics covered:_
   * The **Base64ToText** class is a subclass of BaseTask abstract class, which represents a task that can be executed.   
   * This task is specifically designed to convert a given Base64 encoded value to plain text.
   * The **Base64ToText** class has the following attributes:
-    * **params**: A dictionary containing the parameters required for executing the task. This value will be passed by the SDK at runtime.
+    * **params**: A dictionary containing the parameters required for executing the task. Params value will be passed by the SDK at runtime.
     * **textValue**: A variable that stores the resulting plain text value obtained after decoding the Base64 encoded value.  
   * The **Base64ToTex**t class has the following methods:
     * **__init__(self, params)**: Initializes an instance of the Base64ToText class. 
@@ -222,10 +222,104 @@ _Topics covered:_
 ## Integration plugin
 
 ### Jenkins plugin guided tour
+* _Jenkins project location_ : https://github.com/xebialabs/xlr-container-jenkins-integration
 * _How to define a Server_
+
+    ```xml
+        <type type="ContainerJenkins.Server" extends="configuration.HttpConnection" description="Configure Jenkins Server.">
+            <property name="apiToken" password="true" label="API Token" description="Username is required if using API Token" required="false"
+                      category="Authentication"/>
+            <property name="domain" default="empty" hidden="true"/>
+            <property name="clientId" default="empty" hidden="true"/>
+            <property name="clientSecret" default="empty" hidden="true" password="true"/>
+            <property name="scope" default="empty" hidden="true"/>
+            <property name="accessTokenUrl" default="empty" hidden="true"/>
+            <property name="authenticationMethod" kind="enum"
+                      enum-class="com.xebialabs.xlrelease.domain.configuration.HttpConnection$AuthenticationMethod"
+                      hidden="true" default="Basic">
+                <enum-values>
+                    <value>Basic</value>
+                </enum-values>
+            </property>
+            <property name="retryCount" kind="integer" category="Build" required="false" default="5"
+                      description="Number of retries connection with jenkins"/>
+            <property name="retryWaitingTime" kind="integer" category="Build" required="false" default="10"
+                      description="Waiting time for retry in sec"/>
+        </type>
+    ```
+  * The given XML defines a type called **ContainerJenkins.Server** which extends the pre-defined type **configuration.HttpConnection**. This type is used for configuring a Jenkins server.
+  * Some of these properties are not relevant for Jenkins integration, and hence are **hidden** using the hidden attribute set to **true**.
+  * The properties that are hidden include domain, clientId, clientSecret, scope, accessTokenUrl, and authenticationMethod.
+  * The additional properties apiToken, retryCount and retryWaitingTime that are specific to Jenkins integration.
+  * Overall, this XML defines a type that can be used to configure a Jenkins server in XL Release, while hiding irrelevant fields inherited from **configuration.HttpConnection**.
+
 * _How to use secrets and communicate with a third-party server_
+  ```python
+    class JenkinsBuild(BaseTask):
+
+    def __init__(self, params):
+        super().__init__()
+        self.params = params
+        self.server = params['jenkinsServer']
+        self.jenkins_url = self.server['url'].strip("/")
+        self.auth = (
+            self.server['username'], self.server['apiToken'] if self.server['apiToken'] else self.server['password'])
+        self.job_name = params['jobName'].strip("/")
+        self.job_params = params['jobParameters']
+        self.job_branch = params['branch']
+        self.retry_waiting_time = self.server['retryWaitingTime']
+        self.max_retry_attempts = self.server['retryCount']
+        self.job_url = self.prepare_job_url()
+        self.headers = None
+
+    def launch_build(self):
+        if self.job_params:
+            url = f"{self.jenkins_url}/job/{self.job_url}/buildWithParameters"
+        else:
+            url = f"{self.jenkins_url}/job/{self.job_url}/build"
+        self.set_jenkins_crumb_header()
+        response = requests.post(url, auth=self.auth, params=self.build_job_params(), headers=self.headers)
+        response.raise_for_status()
+  ```
+  * In above code snippet, designed to launch a Jenkins build by making a REST API call to a Jenkins server.
+  * The **__init__()** method is the class constructor, which initializes various instance variables using the params dictionary passed to the class constructor.
+  * The params dictionary contains the following keys:
+    * **jenkinsServer**: A dictionary containing information about the Jenkins server, including its URL, username, password, and API token.
+    * **jobName**: The name of the Jenkins job to be executed.
+    * **jobParameters**: A dictionary of job parameters to be passed to the Jenkins job.
+    * **branch**: The branch name for the job.
+  * The **launch_build()** method is used to actually launch the Jenkins build. It first constructs the URL for the Jenkins build based on the job_url, jenkins_url, and job_params instance variables. It then calls the set_jenkins_crumb_header() method to set a security crumb header, and makes a **POST** request to the Jenkins server using the **requests** library.
 * _How to model a long-running task using Python3 constructs_
+  ```python
+    def wait_for_build_start(self):
+        for i in range(self.max_retry_attempts):
+            build_number = self.check_queue_status()
+            if build_number:
+                self.build_number = build_number
+                self.retry_attempts = i + 1
+                break
+            self.raise_exception_if_aborted()
+            time.sleep(self.retry_waiting_time)
+        else:
+            raise Exception("Failed to determine queued build status and max number of retries reached.")
+        self.build_url = f"{self.jenkins_url}/job/{self.job_url}/{self.build_number}"
+        
+  ```
+  * **wait_for_build_start** method that waits for a queued build to start. It does so by first checking the queue status and retrying a maximum number of times, waiting a set amount of time between each attempt. 
+  * If the build starts within the maximum number of retries, the method sets the **build_number** and **build_url** attributes accordingly.
+  * If a build has not started, the method checks if it has been aborted by calling the **raise_exception_if_aborted** method, and if not, it waits a set amount of time before trying again, specified by the **retry_waiting_time** attribute.
+  * If the maximum number of retries is reached without the build starting, the method raises an exception indicating that it failed to determine the queued build status. 
 * _How to do status line updates and task comments_
+  ```python
+    def handle_build_completion(self):
+        self.add_comment(f"Build is completed and build status is {self.build_status}")
+        self.set_status_line(f"[Build completed #{self.build_number}]")
+        if self.build_status != 'SUCCESS':
+            self.set_exit_code(1)
+            self.set_error_message(f"Build status is {self.build_status}") 
+  ```  
+  * The above code defines a method called **handle_build_completion** that handles the completion of a build. 
+  * It does so by adding a comment to the build to indicate that it has completed and what its status was, setting the status line to indicate that the build has completed, and if the build status was not successful, setting the exit code to 1 and setting an error message.
 * _How to use live logging_
 
 ### Other features
