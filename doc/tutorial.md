@@ -208,10 +208,14 @@ _Topics covered:_
 * _Check if it self-registers in Release_
 
 #### _Explains how to install plugin jar into Release_
-
-#### _Explains how to publish container to be picked up by Remote Runner_
+* To install a new plugin or a new version of an existing plugin, do the following steps:
+  * On the navigation bar in Digital.ai Release, click the **Settings** icon, and then click **Manage plugins**.
+  * Click the **Installed** plugins tab.
+  * Click **Upload** and then select and upload the plugin file from your local machine.
+  * After you upload a plugin, you must restart your Digital.ai Release instance.
 
 #### _Explains how to create a template and run_
+* Create a template with the task **Hello World : Base64 To Text** and run it!
 
 #### _Explains how to troubleshoot if task isn’t picked up_
 
