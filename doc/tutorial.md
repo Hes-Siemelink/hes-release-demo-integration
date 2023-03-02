@@ -1,3 +1,4 @@
+
 # SDK tutorial outline
 
 ## Welcome 
@@ -44,6 +45,30 @@ _Topics covered:_
 * **Install PyCharm:** If you haven't already done so, you'll need to download and install PyCharm on your computer. You can download the latest version of PyCharm from the official website at https://www.jetbrains.com/pycharm/download/. Make sure to select the appropriate installer for your operating system.
 * **Open the project in PyCharm:** Open PyCharm and select "Open" from the welcome screen. Navigate to the directory where you cloned the project and select it. Click "Open" to open the project in PyCharm.
 * **Configure the project interpreter:** PyCharm needs to know which version of Python to use for your project. To configure the project interpreter, go to File > Settings > Project: xlr-container-helloworld-integration > Python Interpreter. Click on the gear icon and select "Add". From the dropdown menu, select "New Environment" and choose the appropriate version of Python. Click "OK" to create the new interpreter.
+
+### _Explains Python SDK_
+
+<p>The Digital.ai Python SDK is a set of tools that developers can use to create container-based tasks.</p>
+<p>The BaseTask abstract class in the SDK is a blueprint for defining tasks. It contains several methods and attributes that can be utilized by subclasses of the BaseTask class. To create a custom task, developers need to create a new class that extends the BaseTask abstract class and implement the task logic in the subclass.</p>
+<p>The SDK will execute the task by calling the execute() method in the subclass. The execute() method contains the task logic, and it can be customized to perform any necessary operations. The Base64ToText class is an example of a subclass that extends the BaseTask abstract class. It defines the properties for the input and output values for the task and implements the execute() method to decode a Base64 string and output the result.</p>
+<p>The execute_task() method in the BaseTask abstract class is responsible for executing the task. It calls the execute() method and handles any exceptions that may occur during task execution. The set_exit_code() and set_error_message() methods are used to set the exit code and error message for the task, respectively.</p>
+<p>The SDK also provides several other methods and attributes that can be used to interact with the task execution environment. For example, the add_comment() method can be used to add a comment to the task output, and the set_status_line() method can be used to set the status line for the task. The get_output_properties() method returns a dictionary containing the output properties for the task.</p>
+<p>The abort() method is used to signal to the SDK that the task execution should be aborted. When abort() is called, it sets the exit code to 1 and immediately exits the task process, causing the task to be marked as failed.</p>
+<p>Overall, the SDK provides a powerful set of tools for creating container-based tasks. Developers can use the BaseTask abstract class as a starting point to define their custom tasks and take advantage of the other methods and attributes provided by the SDK to interact with the task execution environment.</p>
+
+
+* **BaseTask** abstract class contains the following methods and attributes:
+  * **__init__(self):** Initializes an instance of the BaseTask class. It creates an OutputContext object with an initial exit code of 0 and an empty dictionary of output properties.
+  * **execute_task(self) -> None**: Executes the task by calling the execute method. If an AbortException is raised during execution, the task's exit code is set to 1, and the program exits with a status code of 1. If any other exception is raised, the task's exit code is also set to 1.
+  * **execute(self) -> None**: This is an abstract method that must be implemented by subclasses of BaseTask. It represents the main logic of the task.
+  * **abort(self) -> None**: Sets the task's exit code to 1 and exits the program with a status code of 1.
+  * **get_output_context(self) -> OutputContext**: Returns the OutputContext object associated with the task.
+  * **get_output_properties(self) -> Dict[str, Any]**: Returns the output properties dictionary of the task's OutputContext object.
+  * **set_exit_code(self, value) -> None**: Sets the exit code of the task's OutputContext object.
+  * **set_error_message(self, value) -> None**: Sets the error message of the task's OutputContext object.
+  * **add_comment(self, comment: str) -> None**: Logs a comment of the task.
+  * **set_status_line(self, status_line: str) -> None**: Set the status of the task.
+  * **add_reporting_record(self, reporting_record: Any) -> None**: Adds a reporting record to the OutputContext.
 
 ### _Explains project files for xlr-container-helloworld-integration_
 
@@ -136,19 +161,7 @@ _Topics covered:_
       * If the response is successful, it sets the textValue attribute with the plain text obtained by decoding the Base64 encoded string.
       * If any exception occurs during execution, an error message is logged using the **logger** object and the exit code of the task is set to 1 using the **set_exit_code()** method from **BaseTask**. Additionally, the error message is set using the **set_error_message()** method from **BaseTask**.
       * Finally, the **finally** block is executed, where the textValue attribute is added to the output properties dictionary using the **get_output_properties()** method from **BaseTask**. This dictionary is used to store the output of the task, which can be accessed by other tasks in the workflow.
-  * The **BaseTask** abstract class is a blueprint for defining tasks in the SDK. It has several methods and attributes that can be utilized by subclasses of the BaseTask class. 
-  * **BaseTask** abstract class contains the following methods and attributes:
-    * **__init__(self):** Initializes an instance of the BaseTask class. It creates an OutputContext object with an initial exit code of 0 and an empty dictionary of output properties.
-    * **execute_task(self) -> None**: Executes the task by calling the execute method. If an AbortException is raised during execution, the task's exit code is set to 1, and the program exits with a status code of 1. If any other exception is raised, the task's exit code is also set to 1.
-    * **execute(self) -> None**: This is an abstract method that must be implemented by subclasses of BaseTask. It represents the main logic of the task.
-    * **abort(self) -> None**: Sets the task's exit code to 1 and exits the program with a status code of 1.
-    * **get_output_context(self) -> OutputContext**: Returns the OutputContext object associated with the task.
-    * **get_output_properties(self) -> Dict[str, Any]**: Returns the output properties dictionary of the task's OutputContext object.
-    * **set_exit_code(self, value) -> None**: Sets the exit code of the task's OutputContext object.
-    * **set_error_message(self, value) -> None**: Sets the error message of the task's OutputContext object.
-    * **add_comment(self, comment: str) -> None**: Logs a comment of the task.
-    * **set_status_line(self, status_line: str) -> None**: Set the status of the task.
-    * **add_reporting_record(self, reporting_record: Any) -> None**: Adds a reporting record to the OutputContext.
+  * The **BaseTask** abstract class is a blueprint for defining tasks in the SDK. It has several methods and attributes that can be utilized by subclasses of the BaseTask class.
 
 ### _Explains how to run local tests_
 
