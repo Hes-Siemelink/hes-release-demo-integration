@@ -229,6 +229,12 @@ _Topics covered:_
 
 #### _Explains how to create a template and run_
 * Create a template with the task **Hello World : Base64 To Text** and run it!
+* Task input screenshot:  
+<br/> ![Task Input](task_input.png)
+* Task output screenshot:  
+<br/> ![Task Output](task_output.png)
+* Task activity screenshot:  
+<br/> ![Task Activity](task_activity.png)
 
 #### _Explains how to troubleshoot if task isn’t picked up_
 
