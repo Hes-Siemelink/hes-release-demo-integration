@@ -72,6 +72,7 @@ _Topics covered:_
 
 ### _Explains project files for xlr-container-helloworld-integration_
 
+* **Helloworld project location :** https://github.com/xebialabs/xlr-container-helloworld-integration
 * **resources/helloworld.png :** This file is the plugin icon for the project.
 * **resources/plugin-version.properties :** This file contains the plugin name and version. The placeholder values will be replaced by the build script.
 * **resources/synthetic.xml :** This file contains the task released inputs and output details. It defines the input and output fields for the task, as well as any additional properties or configurations that may be necessary.
@@ -161,7 +162,6 @@ _Topics covered:_
       * If the response is successful, it sets the textValue attribute with the plain text obtained by decoding the Base64 encoded string.
       * If any exception occurs during execution, an error message is logged using the **logger** object and the exit code of the task is set to 1 using the **set_exit_code()** method from **BaseTask**. Additionally, the error message is set using the **set_error_message()** method from **BaseTask**.
       * Finally, the **finally** block is executed, where the textValue attribute is added to the output properties dictionary using the **get_output_properties()** method from **BaseTask**. This dictionary is used to store the output of the task, which can be accessed by other tasks in the workflow.
-  * The **BaseTask** abstract class is a blueprint for defining tasks in the SDK. It has several methods and attributes that can be utilized by subclasses of the BaseTask class.
 
 ### _Explains how to run local tests_
 
