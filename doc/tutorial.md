@@ -36,6 +36,8 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
 * Should I set up a virtual environment in Python
 * What is the registry
   * Use `docker run -d -p 5050:5000 --name xlr-registry registry:2`
+* Uninstall:
+  * `helm delete remote-runner -n digitalai`
 
 
 ## Hello World Plugin
