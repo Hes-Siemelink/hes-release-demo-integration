@@ -2,18 +2,18 @@
 
 if "%1" == "--jar" (
     echo Building jar...
-    call :buildJar
+    call :build_jar
 ) else if "%1" == "--image" (
     echo Building image...
-    call :buildImage
+    call :build_image
 ) else (
     echo Building jar and image...
-    call :buildJar
-    call :buildImage
+    call :build_jar
+    call :build_image
 )
 goto :eof
 
-:buildJar
+:build_jar
     :: Remove the tmp directory and create it again
     rd /S /Q tmp 2>nul
     mkdir tmp 2>nul
@@ -61,7 +61,7 @@ goto :eof
     rd /S /Q tmp
 goto :eof
 
-:buildImage
+:build_image
     docker build --tag "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%" .
     docker image push "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%"
     echo build image is success : %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%

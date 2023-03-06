@@ -1,18 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "--jar" ]; then
-  echo "Building jar..."
-  buildJar
-elif [ "$1" == "--image" ]; then
-  echo "Building image..."
-  buildImage
-else
-  echo "Building jar and image..."
-  buildJar
-  buildImage
-fi
-
-buildJar(){
+build_jar(){
   # Remove the tmp directory and create it again
   rm -rf tmp 2>/dev/null
   mkdir tmp 2>/dev/null
@@ -63,8 +51,22 @@ buildJar(){
   rm -rf tmp
 }
 
-buildImage(){
+build_image(){
   docker build --tag "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION" .
   docker image push "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
   echo "build image is success : $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
 }
+
+if [ "$1" == "--jar" ]; then
+  echo "Building jar..."
+  build_jar
+elif [ "$1" == "--image" ]; then
+  echo "Building image..."
+  build_image
+else
+  echo "Building jar and image..."
+  build_jar
+  build_image
+fi
+
+
