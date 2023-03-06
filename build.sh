@@ -46,7 +46,7 @@ build_jar(){
 
   # Create a jar file from the contents of the tmp directory and place it in the build directory
   cd tmp && zip -r "../build/$PLUGIN-$VERSION.jar" . && cd ..
-  echo "build jar is success : $PLUGIN%-$VERSION%.jar"
+  echo "build jar is success : $PLUGIN-$VERSION.jar"
   # Remove the tmp directory
   rm -rf tmp
 }
@@ -57,10 +57,10 @@ build_image(){
   echo "build image is success : $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
 }
 
-if [ "$1" == "--jar" ]; then
+if [ "$1" = "--jar" ]; then
   echo "Building jar..."
   build_jar
-elif [ "$1" == "--image" ]; then
+elif [ "$1" = "--image" ]; then
   echo "Building image..."
   build_image
 else
