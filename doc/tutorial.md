@@ -11,6 +11,35 @@ _Topics covered:_
 * _Architecture: Release instance + Remote Runner_
 * _Tasks are developed as container + traditional plugin jar containing metadata_
 
+
+## Prerequisites
+
+In order to use the Digital.ai Release Integration SDK for Python, you will need:
+
+* Python 3 installed
+* Git
+* Docker
+* A Kubernetes environment, for example Docker Desktop
+* Digital.ai Release running
+* Digital.ai `xl` command line utility (including `kubectl` and `helm`)
+
+
+## XXX TODO XXX
+
+* Install prerequisites in separate document
+* List convenience methods -- link to API?
+* Anatomy of a project
+* Merge template repo and hello world. (See instructions on how to create a copy in README). Maybe add a 'clean.sh' script that will give you an empty skeleton. It is just too confusing to have two projects.
+* `from digitalai.release.container import BaseTask` =>
+  `from digitalai.release.integration import BaseTask`
+* Is there a build step to builds both jar and image?
+* Should I set up a virtual environment in Python
+* What is the registry
+  * Use `docker run -d -p 5050:5000 --name xlr-registry registry:2`
+* Uninstall:
+  * `helm delete remote-runner -n digitalai`
+
+
 ## Hello World Plugin
 
 ### Code & Test
@@ -48,13 +77,19 @@ _Topics covered:_
 
 ### _Explains Python SDK_
 
-<p>The Digital.ai Python SDK is a set of tools that developers can use to create container-based tasks.</p>
-<p>The BaseTask abstract class in the SDK is a blueprint for defining tasks. It contains several methods and attributes that can be utilized by subclasses of the BaseTask class. To create a custom task, developers need to create a new class that extends the BaseTask abstract class and implement the task logic in the subclass.</p>
-<p>The SDK will execute the task by calling the execute() method in the subclass. The execute() method contains the task logic, and it can be customized to perform any necessary operations. The Base64ToText class is an example of a subclass that extends the BaseTask abstract class. It defines the properties for the input and output values for the task and implements the execute() method to decode a Base64 string and output the result.</p>
-<p>The execute_task() method in the BaseTask abstract class is responsible for executing the task. It calls the execute() method and handles any exceptions that may occur during task execution. The set_exit_code() and set_error_message() methods are used to set the exit code and error message for the task, respectively.</p>
-<p>The SDK also provides several other methods and attributes that can be used to interact with the task execution environment. For example, the add_comment() method can be used to add a comment to the task output, and the set_status_line() method can be used to set the status line for the task. The get_output_properties() method returns a dictionary containing the output properties for the task.</p>
-<p>The abort() method is used to signal to the SDK that the task execution should be aborted. When abort() is called, it sets the exit code to 1 and immediately exits the task process, causing the task to be marked as failed.</p>
-<p>Overall, the SDK provides a powerful set of tools for creating container-based tasks. Developers can use the BaseTask abstract class as a starting point to define their custom tasks and take advantage of the other methods and attributes provided by the SDK to interact with the task execution environment.</p>
+The Digital.ai Python SDK is a set of tools that developers can use to create container-based tasks.
+
+The BaseTask abstract class in the SDK is a blueprint for defining tasks. It contains several methods and attributes that can be utilized by subclasses of the BaseTask class. To create a custom task, developers need to create a new class that extends the BaseTask abstract class and implement the task logic in the subclass.
+
+The SDK will execute the task by calling the execute() method in the subclass. The execute() method contains the task logic, and it can be customized to perform any necessary operations. The Base64ToText class is an example of a subclass that extends the BaseTask abstract class. It defines the properties for the input and output values for the task and implements the execute() method to decode a Base64 string and output the result.
+
+The execute_task() method in the BaseTask abstract class is responsible for executing the task. It calls the execute() method and handles any exceptions that may occur during task execution. The set_exit_code() and set_error_message() methods are used to set the exit code and error message for the task, respectively.
+
+The SDK also provides several other methods and attributes that can be used to interact with the task execution environment. For example, the add_comment() method can be used to add a comment to the task output, and the set_status_line() method can be used to set the status line for the task. The get_output_properties() method returns a dictionary containing the output properties for the task.
+
+The abort() method is used to signal to the SDK that the task execution should be aborted. When abort() is called, it sets the exit code to 1 and immediately exits the task process, causing the task to be marked as failed.
+
+Overall, the SDK provides a powerful set of tools for creating container-based tasks. Developers can use the BaseTask abstract class as a starting point to define their custom tasks and take advantage of the other methods and attributes provided by the SDK to interact with the task execution environment.
 
 
 * **BaseTask** abstract class contains the following methods and attributes:
@@ -88,10 +123,11 @@ _Topics covered:_
 
 #### _Explains synthetic.xml :_
 
-  ```xml
+```xml
   <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns="http://www.xebialabs.com/deployit/synthetic"
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+  
     <type type="HelloWorld.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
         <!-- Container image - location of the task logic -->
         <property name="image" required="true" hidden="true" default="@registry.url@/@registry.org@/@project.name@:@project.version@" transient="true"/>
@@ -102,13 +138,16 @@ _Topics covered:_
         <property name="iconLocation" default="helloworld.png" hidden="true"/>
         <property name="taskColor" hidden="true" default="#667385"/>
     </type>
+  
     <type type="HelloWorld.Base64ToText" extends="HelloWorld.BaseTask" description="Decode Base64 to text.">
         <property name="base64Value" category="input"  default="SGVsbG8gV29ybGQ=" description="Enter the text"/>
         <property name="textValue" category="output" description="Decoded text value"/>
     </type>
+  
   </synthetic>
-  ```
-  * The synthetic.xml file that describes the task released inputs and output details for the HelloWorld.Base64ToText task.
+ ```
+
+The synthetic.xml file that describes the task released inputs and output details for the HelloWorld.Base64ToText task.
   * **<type>** Defines a custom task type with a unique name, a parent type to extend, and any additional properties or configurations that the task requires. 
   * **HelloWorld.BaseTask** type defines a container image property and default capabilities for task.
   * **HelloWorld.Base64ToText** type defines properties for input and output values for task.
@@ -116,7 +155,8 @@ _Topics covered:_
   * **Base64ToText** is a user-defined python class name. The SDK will find the Base64ToText class in src folder and create the instance.
 
 #### _Explains base64_to_text.py :_
-  ```python
+
+```python
     import logging
     import requests
     from digitalai.release.container import BaseTask
@@ -145,7 +185,8 @@ _Topics covered:_
             finally:
                 output_properties = self.get_output_properties()
                 output_properties["textValue"] = self.textValue
-  ```
+ ```
+
   * The **Base64ToText** class is a subclass of BaseTask abstract class, which represents a task that can be executed.   
   * This task is specifically designed to convert a given Base64 encoded value to plain text.
   * The **Base64ToText** class has the following attributes:
