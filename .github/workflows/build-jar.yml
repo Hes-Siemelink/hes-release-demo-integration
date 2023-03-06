@@ -18,7 +18,7 @@ jobs:
         shell: cmd
         run: |
           echo "Running build batch script..."
-          build.bat
+          build.bat --jar
 
   build_linux:
     name: Build on Linux
@@ -29,7 +29,7 @@ jobs:
       - name: Run build bash script
         run: |
           echo "Running build bash script..."
-          sh build.sh
+          sh build.sh --jar
 
   build_macos:
     name: Build on MacOS
@@ -40,4 +40,4 @@ jobs:
       - name: Run build bash script
         run: |
           echo "Running build bash script..."
-          sh build.sh
+          sh build.sh --jar
