@@ -55,14 +55,25 @@ goto :eof
     :: Create a jar file from the contents of the tmp directory and place it in the build directory
     powershell Compress-Archive -Path tmp\* -DestinationPath build\%PLUGIN%-%VERSION%.zip
     move build\%PLUGIN%-%VERSION%.zip build\%PLUGIN%-%VERSION%.jar
-    echo build jar is success : %PLUGIN%-%VERSION%.jar
+    echo Build completed: %PLUGIN%-%VERSION%.jar
 
     :: Remove the tmp directory
     rd /S /Q tmp
 goto :eof
 
 :build_image
-    docker build --tag "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%" .
-    docker image push "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%"
-    echo build image is success : %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+    setlocal EnableExtensions EnableDelayedExpansion
+
+    call docker build --tag "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%" .
+    if %ERRORLEVEL% EQU 0 (
+      call docker image push "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%"
+      if %ERRORLEVEL% EQU 0 (
+        echo Build and push completed: %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+      ) else (
+        echo Push failed for %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+      )
+    ) else (
+      echo Build failed for %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+    )
+    endlocal
 goto :eof

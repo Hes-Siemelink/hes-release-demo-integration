@@ -46,15 +46,21 @@ build_jar(){
 
   # Create a jar file from the contents of the tmp directory and place it in the build directory
   cd tmp && zip -r "../build/$PLUGIN-$VERSION.jar" . && cd ..
-  echo "build jar is success : $PLUGIN-$VERSION.jar"
+  echo "Build completed: $PLUGIN-$VERSION.jar"
   # Remove the tmp directory
   rm -rf tmp
 }
 
 build_image(){
-  docker build --tag "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION" .
-  docker image push "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
-  echo "build image is success : $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
+  if docker build --tag "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION" .; then
+    if docker image push "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"; then
+      echo "Build and push completed: $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
+    else
+      echo "Push failed for $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
+    fi
+  else
+    echo "Build failed for $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"
+  fi
 }
 
 if [ "$1" = "--jar" ]; then

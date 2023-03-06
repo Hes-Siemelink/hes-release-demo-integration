@@ -78,25 +78,25 @@ In the Release UI, check the **Connections** page for Remote Runner connections.
 
 ### 6. Create plugin container
 
-On the plugin project, Run build script just to build the plugin jar: 
+Run the build script 
 
 Unix/macOS
 
-    sh build.sh
+* Builds the jar, image and pushes the image to the configured registry  
+``` sh build.sh ``` 
+* Builds the jar  
+``` sh build.sh --jar ``` 
+* Builds the image and pushes the image to the configured registry  
+ ```  sh build.sh --image ``` 
 
 Windows
 
-    build.bat
-
-Run build script to build the plugin jar and publish the image to `xlr-registry:5050`.
-
-Unix/macOS
-
-    sh build.sh --buildImage
-
-Windows
-
-    build.bat --buildImage
+* Builds the jar, image and pushes the image to the configured registry  
+``` build.bat ``` 
+* Builds the jar  
+``` build.bat --jar ``` 
+* Builds the image and pushes the image to the configured registry  
+``` build.bat --image ```
 
 ### 7. Install plugin into Release
 

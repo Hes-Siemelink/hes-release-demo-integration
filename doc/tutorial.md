@@ -236,7 +236,10 @@ The synthetic.xml file that describes the task released inputs and output detail
   ```
 * This code provides a simple test suite for the Base64ToText class which converts a Base64 encoded string to plain text. The test suite contains two test cases, one with a valid Base64 encoded string and another with an invalid string.
 * To run the test suite, Then, open a terminal or command prompt and navigate to the directory containing the file. Finally, run the following command:
-* ```python -m unittest test_base64_to_text.py ```
+* Unix/macOS
+  * ```python3 -m unittest tests/test_base64_to_text.py ```
+* Windows
+  * ```py -m unittest tests\test_base64_to_text.py ```
 * This command will execute the test suite and report the results in the terminal. If all tests pass, you should see an output like this:
 * ``` Ran 2 tests in 0.001s OK```
 
@@ -247,14 +250,20 @@ The synthetic.xml file that describes the task released inputs and output detail
 #### _Explains how to package a plugin and publish the image_
 * Configure the plugin and registry details in the **project.properties**
 * Open a command prompt and navigate to the root directory of your project.
-* Run the build script to build the plugin jar.
-  * Unix/macOS ``` sh build.sh ```
-  * Windows ``` build.bat ```
-  * This command will build a JAR file named **xlr-container-helloworld-integration-1.0.0.jar** in the 'build' folder.
-* Run the build script to build the plugin jar and pushes a Docker image.
-  * Unix/macOS ``` sh build.sh --buildImage ```
-  * Windows ``` build.bat --buildImage```
-  * This command will build a JAR file and push a Docker image named **xlr-container-helloworld-integration:1.0.0** to the specified registry.
+* Unix/macOS  
+  * Builds the jar, image and pushes the image to the configured registry  
+  ``` sh build.sh ``` 
+  * Builds the jar  
+  ``` sh build.sh --jar ``` 
+  * Builds the image and pushes the image to the configured registry  
+   ```  sh build.sh --image ```
+* Windows  
+  * Builds the jar, image and pushes the image to the configured registry  
+  ``` build.bat ``` 
+  * Builds the jar  
+  ``` build.bat --jar ``` 
+  * Builds the image and pushes the image to the configured registry  
+  ``` build.bat --image ```
 
 #### _Explains how to install Remote Runner into an existing Kubernetes environment using xl kube install_
 * _Configure Release and create token_
