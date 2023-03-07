@@ -305,13 +305,25 @@ The synthetic.xml file that describes the task released server, inputs and outpu
   * After you upload a plugin, you must restart your Digital.ai Release instance.
 
 #### _Explains how to create a template and run_
-* Create a template with the task **Hello World : Base64 To Text** and run it!
-* **Task input screenshot:**  
-<br/> ![Task Input](task_input.png)
-* **Task output screenshot:**  
-<br/> ![Task Output](task_output.png)
-* **Task activity screenshot:**  
-<br/> ![Task Activity](task_activity.png)
+* Create a template with the task **Example : Hello** and run it!
+* **Hello Task input screenshot:**  
+<br/> ![Hello Task input](input_hello.PNG)
+* **Hello Task output screenshot:**  
+<br/> ![Hello Task output](output_hello.PNG)
+
+* **Base64 Decode Task input screenshot:**  
+<br/> ![Base64 Decode Task input](input_base64_decode.PNG)
+* **Base64 Decode Task output screenshot:**  
+<br/> ![Base64 Decode Task output](output_base64_decode.PNG)
+
+* **Dummy Json server screenshot:**  
+<br/> ![Dummy Json server](server_dummy_json.PNG)
+* **Dummy Json Task input screenshot:**  
+<br/> ![Dummy Json Task input](input_dummy_json.PNG)
+* **Hello Task output screenshot:**  
+<br/> ![Dummy Json Task output](output_dummy_json.PNG)
+
+
 
 #### _Explains how to troubleshoot if task isn’t picked up_
 * To do
