@@ -57,13 +57,13 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
 * Navigate to the directory where you want to store the project: Navigate to the directory where you want to store the project on your computer using the command prompt or terminal.
 * **Clone the repository:** Clone the repository by running the following command in your terminal:
 * ``` 
-    git clone https://github.com/xebialabs/xlr-container-helloworld-integration.git 
+    git clone https://github.com/xebialabs/release-integration-template-python.git 
     ```
-  Or download from https://github.com/xebialabs/xlr-container-helloworld-integration
+  Or download from https://github.com/xebialabs/release-integration-template-python
 * This will create a new directory with the name "xlr-container-helloworld-integration" in your current working directory, and clone the project files from the GitHub repository into that directory.
 * **Install Dependencies:** Navigate to the project directory and install the dependencies required for the project using the following command:
 * ``` 
-    cd xlr-container-helloworld-integration
+    cd release-integration-template-python
     pip install -r requirements.txt 
   ```
 * This command will change your directory to the cloned repository and install the required Python packages listed in the requirements.txt file.
