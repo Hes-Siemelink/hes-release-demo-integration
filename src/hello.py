@@ -1,0 +1,26 @@
+import logging
+from digitalai.release.container import BaseTask
+
+logger = logging.getLogger('Digitalai')
+
+
+class Hello(BaseTask):
+
+    def __init__(self, params):
+        super().__init__()
+        self.params = params
+        self.greeting = None
+
+    def execute(self) -> None:
+        try:
+            name = self.params['yourName']
+            if not name:
+                raise ValueError("Your Name field cannot be empty")
+            self.greeting = f"Hello {name}"
+        except Exception as e:
+            logger.error("Unexpected error occurred.", exc_info=True)
+            self.set_exit_code(1)
+            self.set_error_message(str(e))
+        finally:
+            output_properties = self.get_output_properties()
+            output_properties["greeting"] = self.greeting
