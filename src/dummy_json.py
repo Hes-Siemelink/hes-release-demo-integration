@@ -23,8 +23,8 @@ class DummyJson(BaseTask):
             self.add_comment(f"Request URL is {request_url}")
             response = requests.get(request_url, auth=self.auth)
             response.raise_for_status()
-            self.product_name = response.json()['title']
-            self.product_brand = response.json()['brand']
+            self.product_name = response.json()['title'].strip()
+            self.product_brand = response.json()['brand'].strip()
         except Exception as e:
             logger.error("Unexpected error occurred.", exc_info=True)
             self.set_exit_code(1)

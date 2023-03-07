@@ -108,17 +108,17 @@ Then:
 
 
 ### 8. Test it!
-Create a template with the task **Container Template: API Example** and run it!
+Create a template with the task **Example: Hello** and run it!
 
 ### 9. Run the unit test
 
 Unix/macOS
 
-    python3 -m unittest tests/test_tasks.py
+    python3 -m unittest discover tests
 
 Windows
 
-    py -m unittest tests\test_tasks.py
+    py -m unittest discover tests
 
 
 

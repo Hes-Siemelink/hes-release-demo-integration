@@ -206,42 +206,37 @@ The synthetic.xml file that describes the task released inputs and output detail
 
 ### _Explains how to run local tests_
 
-#### _Explains test_base64_to_text.py :_
+#### _Explains test_base64_decode.py :_
   ```python
-    import unittest
-    from src.base64_to_text import Base64ToText
-    
-    class TestBase64ToText(unittest.TestCase):
-    
-        def test_valid_base64Value(self):
-            params = {'task_id': 'task_1', 'base64Value': 'SGVsbG8gV29ybGQ='}
-            expected_output = 'Hello World'
-            base64_to_text = Base64ToText(params)
-            base64_to_text.execute()
-            output_properties = base64_to_text.get_output_properties()
-            actual_output = output_properties['textValue']
-            self.assertEqual(actual_output, expected_output)
-    
-        def test_invalid_base64Value(self):
-            params = {'task_id': 'task_2', 'base64Value': '1SGVsbG8gV29ybGQ='}
-            expected_output = None
-            base64_to_text = Base64ToText(params)
-            base64_to_text.execute()
-            output_properties = base64_to_text.get_output_properties()
-            actual_output = output_properties['textValue']
-            self.assertEqual(actual_output, expected_output)
-    
-    if __name__ == '__main__':
-        unittest.main()
+  import unittest
+  
+  from src.base64_decode import Base64Decode
+  
+  class TestBase64Decode(unittest.TestCase):
+  
+      def test_base64_decode(self):
+          params = {
+              'task_id': 'task_1',
+              'base64Value': 'SGVsbG8gV29ybGQ='
+          }
+          expected_output = 'Hello World'
+          base64_decode = Base64Decode(params)
+          base64_decode.execute()
+          output_properties = base64_decode.get_output_properties()
+          actual_output = output_properties['textValue']
+          self.assertEqual(actual_output, expected_output)
+  
+  if __name__ == '__main__':
+      unittest.main()
   ```
-* This code provides a simple test suite for the Base64ToText class which converts a Base64 encoded string to plain text. The test suite contains two test cases, one with a valid Base64 encoded string and another with an invalid string.
-* To run the test suite, Then, open a terminal or command prompt and navigate to the directory containing the file. Finally, run the following command:
+* This code provides a simple test suite for the Base64Decode class which converts a Base64 encoded string to plain text.
+* To run the test suite, Then, open a terminal or command prompt and navigate to the root directory of project. Finally, run the following command:
 * Unix/macOS
-  * ```python3 -m unittest tests/test_base64_to_text.py ```
+  * ```python3 -m unittest discover tests ```
 * Windows
-  * ```py -m unittest tests\test_base64_to_text.py ```
+  * ```py -m unittest discover tests ```
 * This command will execute the test suite and report the results in the terminal. If all tests pass, you should see an output like this:
-* ``` Ran 2 tests in 0.001s OK```
+* ``` Ran 3 tests in 2.658s OK```
 
 ### _(Optional) Explains how to run integration tests in container test framework_
 
@@ -249,7 +244,7 @@ The synthetic.xml file that describes the task released inputs and output detail
 
 #### _Explains how to package a plugin and publish the image_
 * Configure the plugin and registry details in the **project.properties**
-* Open a command prompt and navigate to the root directory of your project.
+* Open a command prompt and navigate to the root directory of project.
 * Unix/macOS  
   * Builds the jar, image and pushes the image to the configured registry  
   ``` sh build.sh ``` 
