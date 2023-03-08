@@ -2,6 +2,8 @@ syntax: glob
 .gradle
 /build/
 .gogradle/
+digitalai
+xebialabs
 
 # Gradle environment specific properties
 
