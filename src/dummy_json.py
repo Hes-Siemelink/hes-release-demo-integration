@@ -1,6 +1,6 @@
 import logging
 import requests
-from digitalai.release.container import BaseTask
+from digitalai.release.integration import BaseTask
 
 logger = logging.getLogger('Digitalai')
 
