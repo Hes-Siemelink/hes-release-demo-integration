@@ -307,21 +307,21 @@ The synthetic.xml file that describes the task released server, inputs and outpu
 #### _Explains how to create a template and run_
 * Create a template with the task **Example : Hello** and run it!
 * **Hello Task input screenshot:**  
-<br/> ![Hello Task input](input_hello.PNG)
+<br/> ![Hello Task input](images/input_hello.png)
 * **Hello Task output screenshot:**  
-<br/> ![Hello Task output](output_hello.PNG)
+<br/> ![Hello Task output](images/output_hello.png)
 
 * **Base64 Decode Task input screenshot:**  
-<br/> ![Base64 Decode Task input](input_base64_decode.PNG)
+<br/> ![Base64 Decode Task input](images/input_base64_decode.png)
 * **Base64 Decode Task output screenshot:**  
-<br/> ![Base64 Decode Task output](output_base64_decode.PNG)
+<br/> ![Base64 Decode Task output](images/output_base64_decode.png)
 
 * **Dummy Json server screenshot:**  
-<br/> ![Dummy Json server](server_dummy_json.PNG)
+<br/> ![Dummy Json server](images/server_dummy_json.png)
 * **Dummy Json Task input screenshot:**  
-<br/> ![Dummy Json Task input](input_dummy_json.PNG)
+<br/> ![Dummy Json Task input](images/input_dummy_json.png)
 * **Hello Task output screenshot:**  
-<br/> ![Dummy Json Task output](output_dummy_json.PNG)
+<br/> ![Dummy Json Task output](images/output_dummy_json.png)
 
 
 
