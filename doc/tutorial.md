@@ -261,14 +261,23 @@ The synthetic.xml file that describes the task released server, inputs and outpu
   if __name__ == '__main__':
       unittest.main()
   ```
-* This code provides a simple test suite for the Base64Decode class which converts a Base64 encoded string to plain text.
-* To run the test suite, Then, open a terminal or command prompt and navigate to the root directory of project. Finally, run the following command:
-* Unix/macOS
-  * ```python3 -m unittest discover tests ```
-* Windows
-  * ```py -m unittest discover tests ```
-* This command will execute the test suite and report the results in the terminal. If all tests pass, you should see an output like this:
-* ``` Ran 3 tests in 2.658s OK```
+This code provides a simple test suite for the Base64Decode class which converts a Base64 encoded string to plain text.
+
+To run the test suite, open a terminal or command prompt and navigate to the root directory of project. Run the following command:
+
+Unix/macOS:
+
+    python3 -m unittest discover tests
+
+Windows:
+
+    py -m unittest discover tests
+
+
+This command will execute the test suite and report the results in the terminal. If all tests pass, you should see an output like this:
+
+    Ran 3 tests in 2.658s OK
+
 
 ### _(Optional) Explains how to run integration tests in container test framework_
 
