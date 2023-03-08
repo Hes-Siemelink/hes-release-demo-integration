@@ -12,7 +12,6 @@ This project serves as a template for developing a Python-based container plugin
 * [Guided tour: the Jenkins plugin](doc/jenkins-guided-tour.md)
 
 
-
 ## Quickstart 
 
 This section describes the quickest way to get a container-based Release task up and running. Refer to the other materials for more in-depth explanations.
@@ -30,11 +29,7 @@ For detailed installation instructions, refer to the [Setup document](doc/setup.
 
 You can do this quickstart on this template repository, or [create your own repository](#how-to-create-your-own-project) first. 
 
-### 1. Install / start K3s
-
-Follow instructions here: https://github.com/xebialabs/xlr-remote-runner/wiki/Local-k3d-setup
-
-### 2. Configure registry in Docker
+### 1. Add container registry to Docker
 
 We will build a container image that will serve as a task for Digital.ai Release. This image needs to be published somewhere so it can be picked up by the Release Remote Runner. For local development, the most convenient way is to run a local registry in Docker.
 
@@ -48,15 +43,11 @@ Add to `/etc/hosts` so it can be found from within Docker Desktop's Kubernetes:
 
 XXX Add: instructions for Windows and mention that you need sudo privileges on max/linux
 
-### 4. Run and configure Release
+### 2. Run and configure Release
 
 If you don't have a Release server running, you can conveniently start the Release application in Docker with the following command
 
     docker run --name xl-release -e ADMIN_PASSWORD=admin -e ACCEPT_EULA=Y -p 5516:5516 xebialabs/xl-release:23.1
-
-<!--
-    docker run --name xl-release -e ADMIN_PASSWORD=admin -e ACCEPT_EULA=Y -p 5516:5516 xebialabsunsupported/xl-release:23.1 
--->
 
 We need to configure Release with a service user for the Remote Runner (see below) and give it the needed permissions.
 
@@ -141,7 +132,7 @@ Check the remote runner logs to see if it started correctly and is able to conne
 In the Release UI, log in as **admin** and check the **Connections** page for Remote Runner connections.
 
 
-### 6. Build & publish the plugin
+### 4. Build & publish the plugin
 
 Run the build script 
 
@@ -163,7 +154,7 @@ Windows
 * Builds the image and pushes the image to the configured registry  
 ``` build.bat --image ```
 
-### 7. Install plugin into Release
+### 5. Install plugin into Release
 
 In Release UI, use the Plugin Manager interface to upload the jar from `build/libs`
 
@@ -171,11 +162,10 @@ Then:
    * Restart Release container
    * Refresh the UI by pressing Reload in the browser.
 
-
-### 8. Test it!
+### 6. Test it!
 Create a template with the task **Example: Hello** and run it!
 
-### 9. Clean up
+### 7. Clean up
 
 To remove the Remote Runner, issue the following command
 
