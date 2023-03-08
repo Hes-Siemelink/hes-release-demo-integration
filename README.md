@@ -1,32 +1,34 @@
-# xlr-container-python-template
+# Template Project for Digital.ai Release Integrations 
 
 This project serves as a template for developing a Python-based container plugin.
 
-## SDK Project
+## Topics
 
-This sample project is based on the SDK base defined here:  
-
-https://github.com/xebialabs/xlr-container-python-sdk
-
-The SDK is available for testing at test.pypi.org:  
-
-https://test.pypi.org/project/digitalai
-
-## How to create your own project
-
-Create a duplicate of this project to start developing your own container-based integration. 
-
-Use the [instructions from GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository). Note: this creates a duplicate, not a fork.
-
-This should also work for other flavors of Git.
+* [Prerequisites and setup](doc/setup.md)
+* [Quickstart](#quickstart) (in this document)
+* [How to create your own project](#how-to-create-your-own-project) (in this document)
+* [Tutorial](doc/tutorial.md)
+* [Reference](doc/reference.md)
+* [Guided tour: the Jenkins plugin](doc/jenkins-guided-tour.md)
 
 
-## How to run 
 
-_**Work in progress:** these notes reflect the current state for developing plugins internally in Digital.ai_
+## Quickstart 
 
+This section describes the quickest way to get a container-based Release task up and running. Refer to the other materials for more in-depth explanations.
+
+The Quickstart assumes you have the following installed already:
+
+* Python 3
+* Git
+* Docker
+
+For detailed installation instructions, refer to the [Setup document](doc/setup.md).
+
+You can do this quickstart on this template repository, or [create your own repository](#how-to-create-your-own-project) first. 
 
 ### 1. Install / start K3s
+
 Follow instructions here: https://github.com/xebialabs/xlr-remote-runner/wiki/Local-k3d-setup
 
 ### 2. Configure registry in Docker
@@ -121,5 +123,45 @@ Windows
     py -m unittest discover tests
 
 
+## How to create your own project
+
+Create a duplicate of this project to start developing your own container-based integration. Note: Please do not create a fork.
+
+### Step 1 - Create a new repository
+
+Before you duplicate the contents of this repository, you already need the new repository to push to.
+
+Use the following naming convention:
+
+    [company]-release-[target]-integration
+
+For example:
+
+    acme-release-jenkins-integration
+
+Now initialize the Git repository with this name and note the url.
+
+* Instructions to [create a repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
+
+### Step 2 - Clone and duplicate
+
+1. Open Terminal.
+2. Create a bare clone of this repository.
+
+    git clone --bare https://github.com/xebialabs/release-integration-template-python.git release-integration-temp
+
+3. Mirror-push to the new repository.
+
+```commandline
+cd release-integration-template-python
+git push --mirror [URL of your new repo]
+```
+
+4. Remove the temporary local repository you created earlier.
+
+```commandline
+cd ..
+rm -rf release-integration-temp
+```
 
 
