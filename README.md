@@ -14,7 +14,9 @@ This project serves as a template for developing a Python-based container plugin
 
 ## Quickstart 
 
-This section describes the quickest way to get a container-based Release task up and running. Refer to the other materials for more in-depth explanations.
+This section describes the quickest way to get a setup with Release and the Remote Runner and run your first container-based task. Refer to the other materials for more in-depth explanations.
+
+The Remote Runner is the glue between the main Release application and the container tasks that are being run. It lives inside Kubernetes, registers itself with Digital.ai Release and then waits for work. When a task needs to be executed, it launches a pod to do so and takes care of the communication between task and Release.
 
 The Quickstart assumes you have the following installed:
 
@@ -37,9 +39,10 @@ Start the registry:
 
     docker run -d -p 5050:5000 --name xlr-registry registry:2
 
-Add to `/etc/hosts` so it can be found from within Docker Desktop's Kubernetes:
+Add to `/etc/hosts` so it can be found from within Docker Desktop's Kubernetes. Also add an entry for Release itself so the Remote Runner can find the Release server.
 
     127.0.0.1 xlr-registry
+    127.0.0.1 digitalai.release.local
 
 XXX Add: instructions for Windows and mention that you need sudo privileges on max/linux
 
@@ -58,19 +61,17 @@ Use the following command to create an account for the Remote Runner and add a u
 The Remote Runner needs a token to register itself with the Release server. In order to obtain a token, do the following
 
 * Log in to release as the `remote-runner` user with the password you gave as a parameter to the `xl apply` command
-* In the top-right corner, click on the **RR** icon and select **Access tokens**
+* Go to the [Access tokens](http://digitalai.release.local:5516/#/personal-access-token) page: In the top-right corner, click on the **RR** icon and select **Access tokens**
 * Enter a token name, for example `Local runner`, and click Generate. Copy the token and store it somewhere for future reference.
 
 ### 3. Set up the runner
-
-The Remote Runner is the glue between the main Release application and the container tasks that are being run. It lives inside Kubernetes, registers itself with Digital.ai Release and then waits for work. When a task needs to be executed, it launches a pod to do so and takes care of the communication between task and Release.
 
 Install the Remote Runner into your local Kubernetes environment with the `xl kube install` command and look closely at the answers below. Note that sometimes you can take the default, sometimes you need to give the value as prompted below and sometimes you need to give a custom value. 
 
 We've marked some questions with a warning sign where you need to pay extra attention.
 
 ```commandline
-$ xl kube install -l ~/Code/xl-op-blueprints
+$ xl kube install 
 ? Following kubectl context will be used during execution: `docker-desktop`?
 » Yes
 ? Select the Kubernetes setup where the Digital.ai Devops Platform will be installed, updated or cleaned:
@@ -90,9 +91,9 @@ $ xl kube install -l ~/Code/xl-op-blueprints
 ? Enter the Remote Runner Helm Chart path (URL or local path):
 »⚠️ /Users/hsiemelink/Code/xlr-remote-runner/helm/remote-runner
 ? Enter the Release URL that will be used by remote runner:
-»⚠️ host.docker.internal
+»⚠️ http://http://digitalai.release.local:5516/
 ? Enter the Release Token that will be used by remote runner:
-»⚠️ rpa_9254744b183882ae604e14ac5644c05f3baa3b8c
+»⚠️ rpa_... (Paste token here)
 ? Provide storage class for the remote runner: hostpath
 	 -------------------------------- ----------------------------------------------------
 	| LABEL                          | VALUE                                              |
@@ -156,10 +157,11 @@ Windows
 
 ### 5. Install plugin into Release
 
-In Release UI, use the Plugin Manager interface to upload the jar from `build/libs`
+In Release UI, use the Plugin Manager interface to upload the jar from `build`.
+The jar takes the name of the project, for example `release-integration-template-python-1.0.0.jar`.
 
 Then:
-   * Restart Release container
+   * Restart Release container and wait for it to come up
    * Refresh the UI by pressing Reload in the browser.
 
 ### 6. Test it!
