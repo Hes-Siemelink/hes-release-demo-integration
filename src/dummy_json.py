@@ -10,18 +10,21 @@ class DummyJson(BaseTask):
     def __init__(self, params):
         super().__init__()
         self.params = params
-        self.server = params['server']
-        self.server_url = self.server['url'].strip("/")
-        self.auth = (self.server['username'], self.server['password'])
         self.product_id = self.params['productId']
         self.product_name = None
         self.product_brand = None
 
     def execute(self) -> None:
         try:
-            request_url = self.server_url + "/products/" + self.product_id
+            if not self.params['server']:
+                raise ValueError("Server field cannot be empty")
+            else:
+                server = self.params['server']
+            server_url = server['url'].strip("/")
+            auth = (server['username'], server['password'])
+            request_url = server_url + "/products/" + self.product_id
             self.add_comment(f"Request URL is {request_url}")
-            response = requests.get(request_url, auth=self.auth)
+            response = requests.get(request_url, auth=auth)
             response.raise_for_status()
             self.product_name = response.json()['title'].strip()
             self.product_brand = response.json()['brand'].strip()
