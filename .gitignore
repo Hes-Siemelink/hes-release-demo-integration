@@ -43,3 +43,6 @@ gradle-app.setting
 *.ipr
 *.iws
 *.log
+
+src/__pycache__/
+tests/__pycache__/
