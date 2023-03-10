@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   xl-release:
-    image: xebialabsunsupported/xl-release:23.1
+    build: ./xl-release
     ports:
       - 5516:5516
     environment:
@@ -33,3 +33,10 @@ services:
     depends_on:
       - xlr-registry
 
+  xl-cli:
+    build: ./xl-cli
+    depends_on:
+      - xl-release
+    command: ["apply", "-v", "-f", "/data/docker-runner.yaml"]
+    volumes:
+      - ./xl-cli:/data:ro
