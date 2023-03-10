@@ -31,15 +31,15 @@ We will run Release within a local Docker environment. Release will take care of
 
 Start the Release environment with the following command
 
+    cd dev-environment
     docker compose up -d --build
 
 ### 2. Configure your `hosts` file
 
 The Release server needs to be able to find the container images of the integration you are creating. In order to do so the Development setup has a registry running inside Docker. Add the address of the registry to your local machine's `hosts` file.
 
-Add the following entries to `/etc/hosts`:
+Add the following entry to `/etc/hosts`:
 
-    127.0.0.1 digitalai.release.local
     127.0.0.1 xlr-registry
 
 XXX Add: instructions for Linux / MacOS and Windows and mention that you need sudo privileges to edit
