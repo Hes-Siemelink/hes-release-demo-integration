@@ -34,3 +34,5 @@ Windows
 * Builds the image and pushes the image to the configured registry  
   ``` build.bat --image ```
 
+## Publishing to a different registry
+

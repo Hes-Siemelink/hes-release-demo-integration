@@ -39,14 +39,18 @@ Start the registry:
 
     docker run -d -p 5050:5000 --name xlr-registry registry:2
 
-Add to `/etc/hosts` so it can be found from within Docker Desktop's Kubernetes. Also add an entry for Release itself so the Remote Runner can find the Release server.
+### 2. Configure your `hosts` file
 
-    127.0.0.1 xlr-registry
+The Remote Runner needs to be able to find the other components in the system: the Release server and the registry we just installed. The easiest way to do so is to add it to your local machine's `hosts` file.
+
+Add the following entries to `/etc/hosts`:
+
     127.0.0.1 digitalai.release.local
+    127.0.0.1 xlr-registry
 
-XXX Add: instructions for Windows and mention that you need sudo privileges on max/linux
+XXX Add: instructions for Linux / MacOS and Windows and mention that you need sudo privileges to edit
 
-### 2. Run and configure Release
+### 3. Run and configure Release
 
 If you don't have a Release server running, you can conveniently start the Release application in Docker with the following command
 
@@ -64,7 +68,7 @@ The Remote Runner needs a token to register itself with the Release server. In o
 * Go to the [Access tokens](http://digitalai.release.local:5516/#/personal-access-token) page: In the top-right corner, click on the **RR** icon and select **Access tokens**
 * Enter a token name, for example `Local runner`, and click Generate. Copy the token and store it somewhere for future reference.
 
-### 3. Set up the runner
+### 4. Set up the runner
 
 Install the Remote Runner into your local Kubernetes environment with the `xl kube install` command and look closely at the answers below. Note that sometimes you can take the default, sometimes you need to give the value as prompted below and sometimes you need to give a custom value. 
 
@@ -133,7 +137,7 @@ Check the remote runner logs to see if it started correctly and is able to conne
 In the Release UI, log in as **admin** and check the **Connections** page for Remote Runner connections.
 
 
-### 4. Build & publish the plugin
+### 5. Build & publish the plugin
 
 Run the build script 
 
@@ -155,7 +159,7 @@ Windows
 * Builds the image and pushes the image to the configured registry  
 ``` build.bat --image ```
 
-### 5. Install plugin into Release
+### 6. Install plugin into Release
 
 In Release UI, use the Plugin Manager interface to upload the jar from `build`.
 The jar takes the name of the project, for example `release-integration-template-python-1.0.0.jar`.
@@ -164,10 +168,10 @@ Then:
    * Restart Release container and wait for it to come up
    * Refresh the UI by pressing Reload in the browser.
 
-### 6. Test it!
+### 7. Test it!
 Create a template with the task **Example: Hello** and run it!
 
-### 7. Clean up
+### 8. Clean up
 
 To remove the Remote Runner, issue the following command
 
@@ -176,9 +180,9 @@ To remove the Remote Runner, issue the following command
 
 ## How to create your own project
 
-Create a duplicate of this project to start developing your own container-based integration. Note: Please do not create a fork.
+Create a **duplicate** of this project to start developing your own container-based integration. Note: Please do _not_ create a fork.
 
-### Step 1 - Create a new repository
+### Create a new repository
 
 Before you duplicate the contents of this repository, you already need the new repository to push to.
 
@@ -192,7 +196,7 @@ Now initialize the Git repository with this name and note the url.
 
 * Instructions to [create a repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
 
-### Step 2 - Clone and duplicate
+### Clone and duplicate
 
 1. Open Terminal.
 2. Create a bare clone of this repository.
@@ -214,5 +218,3 @@ git push --mirror [URL of your new repo]
 cd ..
 rm -rf release-integration-temp
 ```
-
-
