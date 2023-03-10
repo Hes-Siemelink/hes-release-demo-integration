@@ -5,9 +5,7 @@
     <type type="example.BaseTask" extends="xlrelease.ContainerTask" virtual="true">
         <!-- Container image - location of the task logic -->
         <property name="image" required="true" hidden="true" default="@registry.url@/@registry.org@/@project.name@:@project.version@" transient="true"/>
-        <!-- Required capabilities required by all the tasks-->
-        <property name="defaultRequiredCapabilities" default="container" required="true" kind="set_of_string" hidden="true" transient="true"/>
-        <property name="additionalCapabilities" default="container" required="false" kind="set_of_string" hidden="true" transient="true"/>
+
         <!-- Task UI properties -->
         <property name="iconLocation" default="test.png" hidden="true"/>
         <property name="taskColor" hidden="true" default="#667385"/>
