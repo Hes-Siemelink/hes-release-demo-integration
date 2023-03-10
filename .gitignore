@@ -1,27 +1,29 @@
-syntax: glob
-.gradle
-/build/
-.gogradle/
+# Specific to this project
 digitalai
 xebialabs
+remote-runner
+docker_registry
 
-# Gradle environment specific properties
+# The usual suspects
+syntax: glob
 
 # Build output
+build
 .build-cache/
-build/
 out/
 target/
 bin/
-src/main/resources/web/help/onlinehelp
-lab/fake-api/fake-api.pid
 package-lock.json
+
 # Maven
 pom.xml
 
-# Jenkins
-# Ignore stash artifacts produced by build distribution stage so that the workspace is not dirty and version number is correct.
-stash/
+# Gradle
+.gradle
+gradle-app.setting
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+.gradletasknamecache
 
 # Eclipse
 .metadata/
@@ -41,21 +43,3 @@ stash/
 *.ipr
 *.iws
 *.log
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Cache of project
-.gradletasknamecache
-
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
-
-**/__pycache__
-
-tmp/*
-
-remote-runner
