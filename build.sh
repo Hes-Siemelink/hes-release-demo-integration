@@ -1,7 +1,7 @@
 #!/bin/bash
 
-build_jar(){
-  # Remove the tmp directory and create it again
+read_properties(){
+
   rm -rf tmp 2>/dev/null
   mkdir tmp 2>/dev/null
 
@@ -13,6 +13,9 @@ build_jar(){
 
   # Remove project.properties from tmp
   rm tmp/project.properties
+}
+
+build_jar(){
 
   # Copy the resources directory contents to tmp
   cp -R resources/. tmp/
@@ -27,6 +30,7 @@ build_jar(){
     sed -i '' 's/@project.version@/'"$VERSION"'/g' tmp/synthetic.xml
     sed -i '' 's/@registry.url@/'"$REGISTRY_URL"'/g' tmp/synthetic.xml
     sed -i '' 's/@registry.org@/'"$REGISTRY_ORG"'/g' tmp/synthetic.xml
+
   elif [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
     echo "Detected GNU/Linux platform"
 
@@ -65,12 +69,15 @@ build_image(){
 
 if [ "$1" = "--jar" ]; then
   echo "Building jar..."
+  read_properties
   build_jar
 elif [ "$1" = "--image" ]; then
   echo "Building image..."
+  read_properties
   build_image
 else
   echo "Building jar and image..."
+  read_properties
   build_jar
   build_image
 fi

@@ -2,24 +2,29 @@
 
 if "%1" == "--jar" (
     echo Building jar...
+    call :read_properties
     call :build_jar
 ) else if "%1" == "--image" (
     echo Building image...
+    call :read_properties
     call :build_image
 ) else (
     echo Building jar and image...
+    call :read_properties
     call :build_jar
     call :build_image
 )
+goto :eof
+
+:read_properties
+    :: Read project properties from project.properties file and set them as variables
+    for /f "tokens=1,2 delims==" %%G in (project.properties) do (set %%G=%%H)
 goto :eof
 
 :build_jar
     :: Remove the tmp directory and create it again
     rd /S /Q tmp 2>nul
     mkdir tmp 2>nul
-
-    :: Read project properties from project.properties file and set them as variables
-    for /f "tokens=1,2 delims==" %%G in (project.properties) do (set %%G=%%H)
 
     :: Copy the resources directory contents to tmp
     xcopy /E /I resources tmp
