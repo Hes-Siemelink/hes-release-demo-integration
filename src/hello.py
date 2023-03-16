@@ -1,5 +1,4 @@
 import logging
-import time
 
 from digitalai.release.integration import BaseTask
 
@@ -17,12 +16,11 @@ class Hello(BaseTask):
         try:
             name = self.params['yourName']
             if not name:
-                raise ValueError("Your Name field cannot be empty")
+                raise ValueError("The Name field cannot be empty")
+
             self.greeting = f"Hello {name}"
-            # Testing : Loop 10 times with a 3 second pause between iterations
-            for i in range(10):
-                print(f"Iteration {i + 1}")
-                time.sleep(3)
+            self.add_comment(self.greeting)
+
         except Exception as e:
             logger.error("Unexpected error occurred.", exc_info=True)
             self.set_exit_code(1)

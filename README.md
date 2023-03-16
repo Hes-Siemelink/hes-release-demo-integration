@@ -70,6 +70,8 @@ Then:
 ### 5. Test it!
 Create a template with the task **Example: Hello** and run it!
 
+_XXX Expand_
+
 ### 6. Clean up
 
 Stop the development environment with the following command:

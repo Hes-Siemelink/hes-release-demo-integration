@@ -17,7 +17,7 @@ services:
     ports:
       - 5050:5000
     volumes:
-      - ./build:/var/lib/registry
+      - .:/var/lib/registry
 
   xlr-docker-registry-ui:
     image: parabuzzle/craneoperator:latest
