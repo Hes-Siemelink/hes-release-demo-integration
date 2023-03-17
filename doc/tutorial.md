@@ -207,7 +207,7 @@ The synthetic.xml file that describes the task released server, inputs and outpu
 ```python
   import logging
   import requests
-  from digitalai.release.integration import BaseTask
+  from digitalai_release_sdk.release.integration import BaseTask
   
   logger = logging.getLogger('Digitalai')
   

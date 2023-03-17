@@ -36,4 +36,4 @@ ENV PATH="/venv/bin:$PATH"
 RUN pip install -r requirements.txt
 
 # set the entrypoint for the container
-ENTRYPOINT ["python", "-m", "digitalai.release.integration.wrapper"]
+ENTRYPOINT ["python", "-m", "digitalai_release_sdk.release.integration.wrapper"]
