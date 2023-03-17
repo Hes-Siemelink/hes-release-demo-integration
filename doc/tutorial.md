@@ -81,7 +81,8 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
 * ```
     pip install -r requirements.txt 
   ```
-* This command will change your directory to the cloned repository and install the required Python packages listed in the requirements.txt file.
+* This command will install the required Python packages listed in the **requirements.txt** file within the virtual environment.
+* Now you have a virtual environment set up with the required dependencies installed for the project.
 
 
 ### _(Optional) Explains how to set up IDE_
