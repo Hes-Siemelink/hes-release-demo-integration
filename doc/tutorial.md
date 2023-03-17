@@ -60,10 +60,25 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
     git clone https://github.com/xebialabs/release-integration-template-python.git 
     ```
   Or download from https://github.com/xebialabs/release-integration-template-python
-* This will create a new directory with the name "xlr-container-helloworld-integration" in your current working directory, and clone the project files from the GitHub repository into that directory.
-* **Install Dependencies:** Navigate to the project directory and install the dependencies required for the project using the following command:
+* This will create a new directory with the name "release-integration-template-python" in your current working directory, and clone the project files from the GitHub repository into that directory.
+* Navigate to the project directory on your computer using the command prompt or terminal.
+* **Create a virtual environment:** Create a new Python virtual environment in the project directory by running the following command in your terminal:
 * ``` 
-    cd release-integration-template-python
+   python -m venv venv
+  ```
+* This will create a new directory called venv within your project directory, which will contain the virtual environment files.
+* Activate the virtual environment: Activate the virtual environment by running the appropriate command for your operating system:
+* On Windows:
+* ``` 
+   venv\Scripts\activate
+  ```
+* On macOS or Linux::
+* ``` 
+   source venv/bin/activate
+  ```
+* Once activated, you should see the name of the virtual environment displayed in your command prompt or terminal (e.g. (venv) C:\Users\username\project\ on Windows).
+* **Install Dependencies:** Navigate to the project directory and install the dependencies required for the project using the following command:
+* ```
     pip install -r requirements.txt 
   ```
 * This command will change your directory to the cloned repository and install the required Python packages listed in the requirements.txt file.
