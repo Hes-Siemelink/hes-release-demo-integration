@@ -56,24 +56,24 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
 * **Open a Terminal or Command Prompt:** Open a terminal or command prompt on your computer.
 * Navigate to the directory where you want to store the project: Navigate to the directory where you want to store the project on your computer using the command prompt or terminal.
 * **Clone the repository:** Clone the repository by running the following command in your terminal:
-* ``` 
+  ``` 
     git clone https://github.com/xebialabs/release-integration-template-python.git 
     ```
   Or download from https://github.com/xebialabs/release-integration-template-python
 * This will create a new directory with the name "release-integration-template-python" in your current working directory, and clone the project files from the GitHub repository into that directory.
 * Navigate to the project directory on your computer using the command prompt or terminal.
 * **Create a virtual environment:** Create a new Python virtual environment in the project directory by running the following command in your terminal:
-* ``` 
+  ``` 
    python -m venv venv
   ```
 * This will create a new directory called venv within your project directory, which will contain the virtual environment files.
-* Activate the virtual environment: Activate the virtual environment by running the appropriate command for your operating system:
+* **Activate the virtual environment:** Activate the virtual environment by running the appropriate command for your operating system:
 * On Windows:
-* ``` 
+  ``` 
    venv\Scripts\activate
   ```
 * On macOS or Linux::
-* ``` 
+  ``` 
    source venv/bin/activate
   ```
 * Once activated, you should see the name of the virtual environment displayed in your command prompt or terminal (e.g. (venv) C:\Users\username\project\ on Windows).
