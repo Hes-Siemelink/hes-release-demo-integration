@@ -18,6 +18,7 @@ This section describes the quickest way to get a setup with Release to test cont
 
 The Quickstart assumes you have the following installed:
 
+* Python 3
 * Git
 * Docker
 

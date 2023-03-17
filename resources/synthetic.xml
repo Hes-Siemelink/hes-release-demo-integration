@@ -21,6 +21,13 @@
         <property name="textValue" category="output" description="Decoded text value"/>
     </type>
 
+    <type type="example.DummyJson" extends="example.BaseTask" description="Simple API task" label="Container examples: Connect to server">
+        <property name="server" category="input" referenced-type="example.Server" kind="ci"/>
+        <property name="productId" category="input" kind="string" default="1"/>
+        <property name="productName" kind="string" category="output"/>
+        <property name="productBrand" kind="string" category="output"/>
+    </type>
+
     <type type="example.Server" extends="configuration.HttpConnection" description="Configure the server.">
         <!-- Hide the fields which are not relevant for the integration -->
         <property name="domain" default="empty" hidden="true"/>
@@ -35,13 +42,6 @@
                 <value>Basic</value>
             </enum-values>
         </property>
-    </type>
-
-    <type type="example.DummyJson" extends="example.BaseTask" description="Simple API task" label="Container examples: Connect to server">
-        <property name="server" category="input" referenced-type="example.Server" kind="ci"/>
-        <property name="productId" category="input" kind="string" default="1"/>
-        <property name="productName" kind="string" category="output"/>
-        <property name="productBrand" kind="string" category="output"/>
     </type>
 
 </synthetic>

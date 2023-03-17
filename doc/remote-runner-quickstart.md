@@ -60,7 +60,7 @@ We need to configure Release with a service user for the Remote Runner (see belo
 
 Use the following command to create an account for the Remote Runner and add a unique password after `password=`
 
-    xl apply -f doc/remote-runnner-user.yaml --values password=
+    xl apply -f dev-environment/digitalai-release-setup/remote-runnner-user.yaml --values password=
 
 The Remote Runner needs a token to register itself with the Release server. In order to obtain a token, do the following
 
