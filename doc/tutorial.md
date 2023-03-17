@@ -93,7 +93,7 @@ In order to use the Digital.ai Release Integration SDK for Python, you will need
 
 ### _Explains Python SDK_
 
-The Digital.ai Python SDK is a set of tools that developers can use to create container-based tasks.
+The Digital.ai Release Python SDK **(digitalai-release-sdk)** is a set of tools that developers can use to create container-based tasks.
 
 The BaseTask abstract class in the SDK is a blueprint for defining tasks. It contains several methods and attributes that can be utilized by subclasses of the BaseTask class. To create a custom task, developers need to create a new class that extends the BaseTask abstract class and implement the task logic in the subclass.
 
