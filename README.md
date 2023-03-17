@@ -27,16 +27,18 @@ You can do this quickstart on this template repository, or [create your own repo
 
 ### 1. Start Release
 
-We will run Release within a local Docker environment. Release will take care of running the containerized tasks in Docker. For production, you would use the Remote Runner inside Kubernetes to manage that.
+We will run Release within a local Docker environment. In the development setup, the Release server will manage containerized tasks in Docker. For production, you would use the Remote Runner inside Kubernetes to manage that.
 
 Start the Release environment with the following command
 
-    cd dev-environment
-    docker compose up -d --build
+```commandline
+cd dev-environment
+docker compose up -d --build
+```
 
 ### 2. Configure your `hosts` file
 
-The Release server needs to be able to find the container images of the integration you are creating. In order to do so the Development setup has a registry running inside Docker. Add the address of the registry to your local machine's `hosts` file.
+The Release server needs to be able to find the container images of the integration you are creating. In order to do so the development setup has its own registry running inside Docker. Add the address of the registry to your local machine's `hosts` file.
 
 Add the following entry to `/etc/hosts`:
 
@@ -48,15 +50,19 @@ XXX Add: instructions for Linux / MacOS and Windows and mention that you need su
 
 Run the build script
 
-Unix/macOS
+**Unix / macOS**
 
-* Builds the jar, image and pushes the image to the configured registry  
-  ``` sh build.sh ```
+```commandline
+sh build.sh 
+```
 
-Windows
+**Windows**
 
-* Builds the jar, image and pushes the image to the configured registry  
-  ``` build.bat ```
+```commandline
+build.bat 
+```
+
+This builds the jar and the container image and pushes the image to the configured registry.
 
 ### 4. Install plugin into Release
 
