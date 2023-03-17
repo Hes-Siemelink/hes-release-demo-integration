@@ -1,9 +1,0 @@
-xl-deploy:
-  url: http://xl-deploy:4516/
-  username: admin
-  password: admin
-xl-release:
-  url: http://xl-release:5516/
-  username: admin
-  password: admin
-

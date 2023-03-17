@@ -1,8 +1,8 @@
 version: '3.8'
 services:
 
-  xl-release:
-    build: ./xl-release
+  digitalai-release:
+    build: digitalai-release
     ports:
       - 5516:5516
     environment:
@@ -12,6 +12,14 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Needed for docker runner
 
+  digitalai-release-setup:
+    build: digitalai-release-setup
+    depends_on:
+      - digitalai-release
+    command: ["apply", "-v", "-f", "/data/docker-runner.yaml"]
+    volumes:
+      - ./digitalai-release-setup:/data:ro
+
   xlr-registry:
     image: registry:2
     ports:
@@ -19,7 +27,7 @@ services:
     volumes:
       - .:/var/lib/registry
 
-  xlr-docker-registry-ui:
+  xlr-registry-ui:
     image: parabuzzle/craneoperator:latest
     ports:
       - 8086:80
@@ -29,14 +37,6 @@ services:
       - REGISTRY_PROTOCOL=http
       - REGISTRY_ALLOW_DELETE=true
       - SSL_VERIFY=false
-      - TITLE=Digital.ai Docker Registry
+      - TITLE=Digital.ai Release Docker Registry
     depends_on:
       - xlr-registry
-
-  xl-cli:
-    build: ./xl-cli
-    depends_on:
-      - xl-release
-    command: ["apply", "-v", "-f", "/data/docker-runner.yaml"]
-    volumes:
-      - ./xl-cli:/data:ro

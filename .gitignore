@@ -1,13 +1,6 @@
-# Specific to this project
-digitalai
-xebialabs
-remote-runner
-docker_registry
-
-# The usual suspects
 syntax: glob
 
-# Build output
+# Build
 build
 .build-cache/
 out/
@@ -15,25 +8,10 @@ target/
 bin/
 package-lock.json
 
-# Maven
-pom.xml
-
-# Gradle
-.gradle
-gradle-app.setting
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-.gradletasknamecache
-
-# Eclipse
-.metadata/
-.settings/
-.classpath
-.project
-.pydevproject
-.scala_dependencies
-.cache-main
-.cache-tests
+# Python
+src/__pycache__/
+tests/__pycache__/
+venv
 
 # IntelliJ
 .shelf/
@@ -44,5 +22,12 @@ gradle-app.setting
 *.iws
 *.log
 
-src/__pycache__/
-tests/__pycache__/
+# Eclipse
+.metadata/
+.settings/
+.classpath
+.project
+.pydevproject
+.scala_dependencies
+.cache-main
+.cache-tests
