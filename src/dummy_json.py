@@ -6,7 +6,9 @@ logger = logging.getLogger('Digitalai')
 
 
 class DummyJson(BaseTask):
-
+    """
+        The purpose of this task is to fetch product details from a remote server by product ID.
+    """
     def __init__(self, params):
         super().__init__()
         self.params = params

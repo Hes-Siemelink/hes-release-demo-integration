@@ -1,4 +1,9 @@
 @echo off
+:: This script is used to build a jar and/or a docker image of a plugin.
+:: The script takes in one optional argument:
+:: --jar: build only the jar file
+:: --image: build only the docker image
+:: If no argument is passed, both jar and image will be built.
 
 if "%1" == "--jar" (
     echo Building jar...
@@ -67,18 +72,15 @@ goto :eof
 goto :eof
 
 :build_image
-    setlocal EnableExtensions EnableDelayedExpansion
-
+:: Build docker image and push to registry
     call docker build --tag "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%" .
-    if %ERRORLEVEL% EQU 0 (
-      call docker image push "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%"
-      if %ERRORLEVEL% EQU 0 (
-        echo Build and push completed: %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
-      ) else (
-        echo Push failed for %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
-      )
-    ) else (
+    if errorlevel 1 (
       echo Build failed for %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+      goto :eof
     )
-    endlocal
+    call docker image push "%REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%" && (
+      echo Build and push completed: %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+    ) || (
+      echo Push failed for %REGISTRY_URL%/%REGISTRY_ORG%/%PLUGIN%:%VERSION%
+    )
 goto :eof

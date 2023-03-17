@@ -6,7 +6,9 @@ logger = logging.getLogger('Digitalai')
 
 
 class Hello(BaseTask):
-
+    """
+       The purpose of this task is to greet by the given name.
+    """
     def __init__(self, params):
         super().__init__()
         self.params = params
@@ -17,7 +19,6 @@ class Hello(BaseTask):
             name = self.params['yourName']
             if not name:
                 raise ValueError("The Name field cannot be empty")
-
             self.greeting = f"Hello {name}"
             self.add_comment(self.greeting)
 

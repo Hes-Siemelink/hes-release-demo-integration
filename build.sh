@@ -1,11 +1,16 @@
 #!/bin/bash
+# This script is used to build a jar and/or a docker image of a plugin.
+# The script takes in one optional argument:
+# --jar: build only the jar file
+# --image: build only the docker image
+# If no argument is passed, both jar and image will be built.
 
 read_properties(){
-
+  # Remove the tmp directory and create it again
   rm -rf tmp 2>/dev/null
   mkdir tmp 2>/dev/null
 
-  #Remove all the carriage returns
+  # Remove all the carriage returns
   sed 's/\r$//' project.properties > tmp/project.properties
 
   # Read project properties from project.properties file and set them as variables
@@ -56,6 +61,7 @@ build_jar(){
 }
 
 build_image(){
+  # Build docker image and push to registry
   if docker build --tag "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION" .; then
     if docker image push "$REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"; then
       echo "Build and push completed: $REGISTRY_URL/$REGISTRY_ORG/$PLUGIN:$VERSION"

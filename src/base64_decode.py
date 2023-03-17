@@ -6,7 +6,9 @@ logger = logging.getLogger('Digitalai')
 
 
 class Base64Decode(BaseTask):
-
+    """
+        The purpose of this task is to decode the base64 value.
+    """
     def __init__(self, params):
         super().__init__()
         self.params = params
