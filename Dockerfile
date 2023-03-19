@@ -23,12 +23,6 @@ COPY requirements.txt $APP_HOME/
 # set the working directory to the app directory
 WORKDIR $APP_HOME
 
-# create a new virtual environment
-RUN python -m venv /venv
-
-# activate the virtual environment
-ENV PATH="/venv/bin:$PATH"
-
 # If needed, upgrade pip
 # RUN pip install --upgrade pip
 
@@ -36,4 +30,4 @@ ENV PATH="/venv/bin:$PATH"
 RUN pip install -r requirements.txt
 
 # set the entrypoint for the container
-ENTRYPOINT ["python", "-m", "digitalai_release_sdk.release.integration.wrapper"]
+ENTRYPOINT ["python", "-m", "digitalai.release.integration.wrapper"]

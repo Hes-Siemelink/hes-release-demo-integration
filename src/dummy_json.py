@@ -1,6 +1,6 @@
 import logging
 import requests
-from digitalai_release_sdk.release.integration import BaseTask
+from digitalai.release.integration import BaseTask
 
 logger = logging.getLogger('Digitalai')
 
@@ -35,6 +35,5 @@ class DummyJson(BaseTask):
             self.set_exit_code(1)
             self.set_error_message(str(e))
         finally:
-            output_properties = self.get_output_properties()
-            output_properties['productName'] = self.product_name
-            output_properties['productBrand'] = self.product_brand
+            self.set_output_property('productName', self.product_name)
+            self.set_output_property('productBrand', self.product_brand)

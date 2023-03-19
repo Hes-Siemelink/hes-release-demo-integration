@@ -1,4 +1,4 @@
-from digitalai_release_sdk.release.integration import BaseTask
+from digitalai.release.integration import BaseTask
 
 
 class Hello(BaseTask):
@@ -19,5 +19,5 @@ class Hello(BaseTask):
         # Add to the comment section of the task in the UI
         self.add_comment(greeting)
 
-        self.get_output_properties()['greeting'] = greeting
+        self.set_output_property('greeting', greeting)
 
