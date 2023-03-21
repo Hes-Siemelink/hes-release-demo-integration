@@ -239,7 +239,7 @@ Let's walk through the synthetic.xml document.
 ```python
   import logging
   import requests
-  from digitalai_release_sdk.release.integration import BaseTask
+  from digitalai.release.integration import BaseTask
   
   logger = logging.getLogger('Digitalai')
   
