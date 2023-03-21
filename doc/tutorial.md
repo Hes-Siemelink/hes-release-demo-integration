@@ -88,7 +88,7 @@ Now you have a virtual environment set up with the required dependencies install
 
 Open PyCharm and select **Open** from the welcome screen. Navigate to the directory where you cloned the project and open it.
 
-**Configure the project interpreter:** PyCharm needs to know which version of Python to use for your project. To configure the project interpreter, go to **File > Settings > Project: xlr-container-helloworld-integration > Python Interpreter**. Click on the gear icon and select **Add**. From the dropdown menu, select "New Environment" and choose the appropriate version of Python. Click "OK" to create the new interpreter.
+**Configure the project interpreter:** PyCharm needs to know which version of Python to use for your project. To configure the project interpreter, go to **File > Settings > Project: your-project > Python Interpreter**. Click on the gear icon and select **Add**. From the dropdown menu, select "New Environment" and choose the appropriate version of Python. Click "OK" to create the new interpreter.
 
 ### Python SDK Overview
 
@@ -126,6 +126,9 @@ The `abort()` method is used to signal to the SDK that the task execution should
 * `add_comment(self, comment: str) -> None`: Adds a comment to the task that will be visible in the UI.
 * `set_status_line(self, status_line: str) -> None`: Set the status line of the task. This is update live in the UI.
 * `add_reporting_record(self, reporting_record: Any) -> None`: Adds a reporting record to the OutputContext. The reporting records are used in the Audit Report.
+* `set_output_property(self, name: str, value: Any) -> None`: Sets the name and value of an output property of the task.
+* `get_release_server_url(self) -> str`: Returns the Release server URL of the associated task.
+* `get_task_user(self) -> AutomatedTaskAsUserContext:`: Returns the user details that are executing the task.
 
 ### Anatomy of a project
 
