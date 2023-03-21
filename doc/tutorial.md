@@ -263,8 +263,7 @@ Let's walk through the synthetic.xml document.
               self.set_exit_code(1)
               self.set_error_message(str(e))
           finally:
-              output_properties = self.get_output_properties()
-              output_properties["textValue"] = self.textValue
+              self.set_output_property('textValue', self.textValue)
  ```
 
 The **Base64Decode** class is a subclass of `BaseTask` abstract class and is therefore a task that can be executed.   
@@ -285,7 +284,7 @@ The **Base64ToTex**t class has the following methods:
   * It checks whether the response returned contains the message "Incorrect Base64 data". If yes, it raises a ValueError with the response text.
   * If the response is successful, it sets the textValue attribute with the plain text obtained by decoding the Base64 encoded string.
   * If any exception occurs during execution, an error message is logged using the **logger** object and the exit code of the task is set to 1 using the **set_exit_code()** method from **BaseTask**. Additionally, the error message is set using the **set_error_message()** method from **BaseTask**.
-  * Finally, the **finally** block is executed, where the textValue attribute is added to the output properties dictionary using the **get_output_properties()** method from **BaseTask**. This dictionary is used to store the output of the task, which can be accessed by other tasks in the workflow.
+  * Finally, the **finally** block is executed, where the textValue attribute is added to the output properties dictionary using the **set_output_property()** method from **BaseTask**.
 
 ### _Explains how to run local tests_
 
