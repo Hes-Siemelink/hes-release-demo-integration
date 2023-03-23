@@ -5,6 +5,7 @@ from digitalai.release.v1 import Configuration, ApiClient
 from digitalai.release.v1.api.configuration_api import ConfigurationApi
 from digitalai.release.v1.api.release_api import ReleaseApi
 from digitalai.release.v1.model.release import Release
+from digitalai.release.v1.model.system_message_settings import SystemMessageSettings
 from digitalai.release.v1.model.variable import Variable
 
 logger = logging.getLogger('Digitalai')
@@ -30,19 +31,13 @@ class Base64Decode(BaseTask):
             self.textValue = response.text
 
             # For Release API methods testing
-
-            release_server_url = self.get_release_server_url()
-            if not release_server_url:
-                release_server_url = "http://host.docker.internal:5516"
-
-            task_user = self.get_task_user()
-            if not task_user.username:
-                task_user.username = 'admin'
-                task_user.password = 'admin'
-
-            configuration = Configuration(host=release_server_url, username=task_user.username,
-                                          password=task_user.password)
-            api_client = ApiClient(configuration)
+            try:
+                api_client = self.get_default_api_client()
+            except Exception as e:
+                print("Fallback for api client :")
+                configuration = Configuration(host="http://host.docker.internal:5516", username="admin",
+                                              password="admin")
+                api_client = ApiClient(configuration)
 
             configuration_api = ConfigurationApi(api_client)
             variable_list: [Variable] = configuration_api.get_global_variables()
@@ -51,6 +46,17 @@ class Base64Decode(BaseTask):
             release_api = ReleaseApi(api_client)
             release_list: [Release] = release_api.get_releases(depth=1, page=0, results_per_page=1)
             print(f"release_list : {release_list}\n")
+
+            system_message_settings = SystemMessageSettings(
+                id="Configuration/settings/SystemMessageSettings",
+                enabled=True,
+                type='xlrelease.SystemMessageSettings',
+                automated=False,
+                message='Sample Message')
+
+            system_message_settings: SystemMessageSettings = configuration_api.update_system_message(
+                system_message_settings=system_message_settings)
+            print(f"Updated System Message Settings : {system_message_settings}\n")
 
         except Exception as e:
             logger.error("Unexpected error occurred.", exc_info=True)
