@@ -44,4 +44,8 @@
         </property>
     </type>
 
+    <type type="example.SetSystemMessage" extends="example.BaseTask" description="Simple API task" label="Container examples: Set system message">
+        <property name="message" category="input" kind="string" description="This message will appear as a banner in the Release UI. Admin access required."/>
+    </type>
+
 </synthetic>
