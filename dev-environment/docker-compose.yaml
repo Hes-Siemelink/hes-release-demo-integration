@@ -8,6 +8,7 @@ services:
     environment:
       - ADMIN_PASSWORD=admin
       - ACCEPT_EULA=Y
+      - SERVER_URL=http://host.docker.internal:5516
     user: root  # Needed for docker runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Needed for docker runner
