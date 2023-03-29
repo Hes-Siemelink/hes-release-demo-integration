@@ -129,6 +129,7 @@ The `abort()` method is used to signal to the SDK that the task execution should
 * `set_output_property(self, name: str, value: Any) -> None`: Sets the name and value of an output property of the task.
 * `get_release_server_url(self) -> str`: Returns the Release server URL of the associated task.
 * `get_task_user(self) -> AutomatedTaskAsUserContext:`: Returns the user details that are executing the task.
+* `get_default_api_client(self) -> ApiClient:`: Returns an ApiClient object with default configuration based on the task.
 
 ### Anatomy of a project
 
