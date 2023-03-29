@@ -75,6 +75,8 @@
     def __init__(self, params):
         super().__init__()
         self.params = params
+        if not self.params['jenkinsServer']:
+            raise ValueError("Server field cannot be empty")
         self.server = params['jenkinsServer']
         self.jenkins_url = self.server['url'].strip("/")
         self.auth = (
@@ -130,7 +132,7 @@
   ```python
     def handle_build_completion(self):
         self.add_comment(f"Build is completed and build status is {self.build_status}")
-        self.set_status_line(f"[Build completed #{self.build_number}]")
+        self.set_status_line(f"[Build #{self.build_number}]({self.build_url})")
         if self.build_status != 'SUCCESS':
             self.set_exit_code(1)
             self.set_error_message(f"Build status is {self.build_status}") 

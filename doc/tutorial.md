@@ -213,6 +213,10 @@ Notable files here:
             </enum-values>
         </property>
     </type>
+  
+    <type type="example.SetSystemMessage" extends="example.BaseTask" description="Simple API task" label="Container examples: Set system message">
+        <property name="message" category="input" kind="string" description="This message will appear as a banner in the Release UI. Admin access required."/>
+    </type>
     
 </synthetic>
  ```
@@ -235,6 +239,7 @@ Let's walk through the synthetic.xml document.
   * The type `example.Base64Decode` defines properties for input and output values for the Base64Decode task.
   * The type `example.DummyJson` type defines properties for input and output values for the DummyJson task.
   * The type `example.Server` defines an endpoint, not a task. It extends `configuration.HttpConnection` and has properties to set up an HTTP connection. In this example, properties that are not relevant have been disable by setting `hidden="true"`. This type isused in the DummyJson class.
+  * The type `example.SetSystemMessage` type defines properties for input values for the Simple API task.
 
 #### Example: Base64Decode.py
 
