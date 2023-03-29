@@ -29,35 +29,6 @@ class Base64Decode(BaseTask):
             if 'Incorrect Base64 data' in response.text:
                 raise ValueError(response.text)
             self.textValue = response.text
-
-            # For Release API methods testing
-            try:
-                api_client = self.get_default_api_client()
-            except Exception as e:
-                print("Fallback for api client :")
-                configuration = Configuration(host="http://host.docker.internal:5516", username="admin",
-                                              password="admin")
-                api_client = ApiClient(configuration)
-
-            configuration_api = ConfigurationApi(api_client)
-            variable_list: [Variable] = configuration_api.get_global_variables()
-            print(f"variable_list : {variable_list}\n")
-
-            release_api = ReleaseApi(api_client)
-            release_list: [Release] = release_api.get_releases(depth=1, page=0, results_per_page=1)
-            print(f"release_list : {release_list}\n")
-
-            system_message_settings = SystemMessageSettings(
-                id="Configuration/settings/SystemMessageSettings",
-                enabled=True,
-                type='xlrelease.SystemMessageSettings',
-                automated=False,
-                message='Sample Message')
-
-            system_message_settings: SystemMessageSettings = configuration_api.update_system_message(
-                system_message_settings=system_message_settings)
-            print(f"Updated System Message Settings : {system_message_settings}\n")
-
         except Exception as e:
             logger.error("Unexpected error occurred.", exc_info=True)
             self.set_exit_code(1)
