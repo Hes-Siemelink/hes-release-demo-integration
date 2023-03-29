@@ -148,6 +148,7 @@ Notable files here:
   * `hello.py`: This file contains the logic for the **Hello** task.
   * `base64_decode.py`: This file contains the logic for the **Base64 Decode** task.
   * `dummy_json.py`: This file contains the logic for the **Dummy Json** task.
+  * `set_system_message.py`: This file contains the logic for the **Simple API** task.
 
   Remove these files when creating a new project and replace them with your own logic.
   
