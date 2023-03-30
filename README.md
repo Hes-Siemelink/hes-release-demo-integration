@@ -2,29 +2,66 @@
 
 This project serves as a template for developing a Python-based container plugin.
 
-## Topics
+## Prerequisites
 
-* [Prerequisites and setup](doc/setup.md)
-* [Quickstart](#quickstart) (in this document)
-* [How to create your own project](#how-to-create-your-own-project) (in this document)
-* [Tutorial](doc/tutorial.md)
-* [Reference](doc/reference.md)
-* [Guided tour: the Jenkins plugin](doc/jenkins-guided-tour.md)
-
-
-## Quickstart
-
-This section describes the quickest way to get a setup with Release to test containerized plugins. This is not a production setup. For production, please use the [Remote Runner](doc/remote-runner-quickstart.md) to run container tasks.
-
-The Quickstart assumes you have the following installed:
+You need to have the following installed in order to develop Python-based container tasks for Release using this project:
 
 * Python 3
 * Git
 * Docker
 
-For detailed installation instructions, refer to the [Setup document](doc/setup.md).
+For a quick check of your environment, run the [Quickstart](#quickstart) on this template repository.
 
-You can do this quickstart on this template repository, or [create your own repository](#how-to-create-your-own-project) first.
+
+## How to create your own project
+
+This repo is a template project, meaning you shouldn't make changes to it.
+Create a **duplicate** of this project to start developing your own container-based integration. 
+
+Note: Please do _not_ create a fork.
+
+### Create a new repository
+
+Before you duplicate the contents of this repository, you already need a new repository to push to.
+
+Use the following naming convention:
+
+    [company]-release-[target]-integration
+
+For example: `acme-release-jenkins-integration`
+
+Now initialize the Git repository with this name and note the url.
+
+* Instructions to [create a repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
+
+### Clone and duplicate
+
+1. Open Terminal.
+2. Create a bare clone of this repository.
+
+```commandline
+git clone --bare https://github.com/xebialabs/release-integration-template-python.git release-integration-temp
+```
+
+3. Mirror-push to the new repository.
+
+```commandline
+cd release-integration-template-python
+git push --mirror [URL of your new repo]
+```
+
+4. Remove the temporary local repository you created earlier.
+
+```commandline
+cd ..
+rm -rf release-integration-temp
+```
+
+
+
+## Quickstart
+
+This section describes the quickest way to get a setup with Release to test containerized plugins. This is not a production setup. For production, please use the [Remote Runner](doc/remote-runner-quickstart.md) to run container tasks.
 
 ### 1. Start Release
 
@@ -84,45 +121,3 @@ _XXX Expand_
 Stop the development environment with the following command:
 
     docker compose down
-
-
-## How to create your own project
-
-Create a **duplicate** of this project to start developing your own container-based integration. Note: Please do _not_ create a fork.
-
-### Create a new repository
-
-Before you duplicate the contents of this repository, you already need the new repository to push to.
-
-Use the following naming convention:
-
-    [company]-release-[target]-integration
-
-For example: `acme-release-jenkins-integration`
-
-Now initialize the Git repository with this name and note the url.
-
-* Instructions to [create a repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)
-
-### Clone and duplicate
-
-1. Open Terminal.
-2. Create a bare clone of this repository.
-
-```commandline
-git clone --bare https://github.com/xebialabs/release-integration-template-python.git release-integration-temp
-```
-
-3. Mirror-push to the new repository.
-
-```commandline
-cd release-integration-template-python
-git push --mirror [URL of your new repo]
-```
-
-4. Remove the temporary local repository you created earlier.
-
-```commandline
-cd ..
-rm -rf release-integration-temp
-```
