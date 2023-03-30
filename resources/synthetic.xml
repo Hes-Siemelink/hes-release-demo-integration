@@ -11,41 +11,8 @@
         <property name="taskColor" hidden="true" default="#667385"/>
     </type>
 
-    <type type="example.Hello" extends="example.BaseTask" description="Simple greeter task" label="Container examples: Hello World">
-        <property name="yourName" category="input" kind="string" default="World"/>
-        <property name="greeting" kind="string" category="output"/>
-    </type>
-
-    <type type="example.Base64Decode" extends="example.BaseTask" description="Decode Base64 to text" label="Container examples: Base64 decode">
-        <property name="base64Value" category="input"  default="SGVsbG8gV29ybGQ=" description="Enter the text"/>
-        <property name="textValue" category="output" description="Decoded text value"/>
-    </type>
-
-    <type type="example.DummyJson" extends="example.BaseTask" description="Simple API task" label="Container examples: Connect to server">
-        <property name="server" category="input" referenced-type="example.Server" kind="ci"/>
-        <property name="productId" category="input" kind="string" default="1"/>
-        <property name="productName" kind="string" category="output"/>
-        <property name="productBrand" kind="string" category="output"/>
-    </type>
-
-    <type type="example.Server" extends="configuration.HttpConnection" description="Configure the server.">
-        <!-- Hide the fields which are not relevant for the integration -->
-        <property name="domain" default="empty" hidden="true"/>
-        <property name="clientId" default="empty" hidden="true"/>
-        <property name="clientSecret" default="empty" hidden="true" password="true"/>
-        <property name="scope" default="empty" hidden="true"/>
-        <property name="accessTokenUrl" default="empty" hidden="true"/>
-        <property name="authenticationMethod" kind="enum"
-                  enum-class="com.xebialabs.xlrelease.domain.configuration.HttpConnection$AuthenticationMethod"
-                  default="Basic" hidden="true">
-            <enum-values>
-                <value>Basic</value>
-            </enum-values>
-        </property>
-    </type>
-
-    <type type="example.SetSystemMessage" extends="example.BaseTask" description="Simple API task" label="Container examples: Set system message">
-        <property name="message" category="input" kind="string" description="This message will appear as a banner in the Release UI. Admin access required."/>
+    <type type="hes.UpdateFlag" extends="example.BaseTask" description="Simple API task" >
+        <property name="message" category="input" kind="string" description="This message will appear as a banner on the task"/>
     </type>
 
 </synthetic>
