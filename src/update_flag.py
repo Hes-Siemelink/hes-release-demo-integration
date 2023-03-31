@@ -16,12 +16,11 @@ class UpdateFlag(BaseTask):
     def __init__(self, params):
         super().__init__()
         self.message = params['message']
-        self.task_id = params['task_id']
 
     def execute(self) -> None:
         task_api = TaskApi(self.get_default_api_client())
 
-        task: Task = task_api.get_task(self.task_id)
+        task: Task = task_api.get_task(self.get_task_id())
 
         task.flag_comment = self.message
         task.flag_status = FlagStatus("ATTENTION_NEEDED")
@@ -30,7 +29,7 @@ class UpdateFlag(BaseTask):
 
         self.add_comment(f"Task flag updated to \"{self.message}\"")
 
-        self.set_exit_code(1)
         self.set_error_message("Failing so you can see the flag")
+        self.set_exit_code(1)
 
 
