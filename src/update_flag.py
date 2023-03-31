@@ -10,7 +10,7 @@ logger = logging.getLogger('Digitalai')
 
 class UpdateFlag(BaseTask):
     """
-        Sets the system message in the Release UI by invoking the API.
+        Sets the warning flag on a task by invoking the API.
     """
 
     def __init__(self, params):
